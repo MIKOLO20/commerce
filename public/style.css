@@ -1,0 +1,434 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+      cursor: pointer;
+}
+.btn{
+    background-color: #000035;   
+}
+.box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: #000035;
+    padding: 5px 0;
+}
+.unorder{
+    margin: auto;
+     list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+.com1{
+    position: relative;
+}
+.comm{
+    position: absolute;
+     display: none;
+    position: absolute;
+    top: 40px;
+    background: white;
+    color: black;
+    width: 200px;
+    padding: 10px;
+    border-radius: 5px;
+}
+.com1:hover .comm{
+    display: block;
+    transition: 0.9s;
+}
+.her{
+    position: relative;
+}
+.her span{
+     position: absolute;
+        top: -4px;
+        right: -2px;
+        background-color:  #000035;
+        color: white;
+        border-radius: 50%;
+        padding: 3px 5px;
+        font-size: 6px;
+        font-weight: bold;
+}
+.car{
+    position: relative;
+    font-size: 20px;
+}
+.car span{
+     position: absolute;
+        top: -4px;
+        right: -10px;
+        background-color:  #000035;
+        color: white;
+        border-radius: 50%;
+        padding: 3px 5px;
+        font-size: 6px;
+        font-weight: bold;
+}
+.parent{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 500px);
+    gap: 20px;
+    /* padding: 70px; */
+}
+.cloth{
+    /* border: 1px solid black;  */
+    border-radius: 10px;
+    text-align: center;
+    padding: 3px 10px 20px;
+    /* box-shadow: 0 0 10px rgba(0,0,0,0.1); */
+    /* background-color:  #000035; */
+    width: 300px;
+    /* height: 500px; */
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.img-box img{
+    width: 100%;
+    height: 70%;
+    border-radius: 10px;
+}
+.img-box{
+    position: relative;
+    overflow: hidden;
+}
+
+.est{
+    position: absolute;
+   top: 10px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.pp{
+         width: 100px;
+            height: 3vh;
+            border: none;
+            font-weight: bolder;
+            border-radius: 20px;
+            background-color: #000035;
+            color: white;
+            font-size: 10px;
+          /* position: absolute; */
+          top: 350px;
+}
+.ppp{
+          width: 30px;
+            height: 4vh;
+            border: none;
+            font-weight: bolder;
+            border-radius: 50px;
+            background-color: white;
+            color: black;
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+              /* position: absolute; */
+          top: 350px;
+            right: 300px;
+}
+/* Product heart when active */
+.wishlist-icon.active {
+    color: #000035;
+    transform: scale(1.2);
+    transition: 0.2s ease-in-out;
+}
+
+/* Navbar heart when wishlist has items */
+.active-heart {
+    color: #000035 !important;
+    transition: 0.3s ease-in-out;
+}
+.wishlist-box {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-heart {
+    font-size: 22px;   /* adjust if needed */
+}
+
+.nav-heart-count {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: #000035;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 50%;
+    line-height: 1;
+}
+
+
+.ppp:hover{
+    background-color: #000035;
+    color: white;
+    transition: 0.5s;
+}
+.line{
+    text-decoration: line-through;
+}
+.pp2{
+     width: 100px;
+            height: 3vh;
+            border: none;
+            font-weight: bolder;
+            border-radius: 20px;
+            background-color: #000035;
+            color: white;
+            font-size: 10px;
+          position: absolute;
+          top: 350px;
+}
+.cl2 img{
+    position: relative;
+}
+.ppp2{
+      width: 30px;
+            height: 4vh;
+            border: none;
+            font-weight: bolder;
+            border-radius: 50px;
+            background-color: white;
+            color: black;
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+              position: absolute;
+          top: 340px;
+            right: 100px;      
+}
+.ppp2:hover{
+    background-color: #000035;
+    color: white;
+    transition: 0.5s;
+}
+.cart-hover{
+     position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: #000035;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    font-size: 20px;
+    transition: 0.3s ease-in-out;
+    z-index: 10; /* make sure it’s above the image */
+}
+.img-box:hover .cart-hover{
+     opacity: 1;
+    transform: translateY(-5px);
+}
+.nav-cart-box {
+    position: relative;
+    display: inline-block;
+}
+
+.nav-cart-count {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: #000035;
+    color: white;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+.input-field{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+
+}
+.input-field input{
+    width: 300px;
+    padding: 10px;
+    border: 1px solid #000035;
+    border-right: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    outline: none;
+}
+.input-field button{
+    padding: 10px;
+   color: white;
+   
+}
+.input-icon .fa-solid{
+    position: absolute;
+    padding: 15px;
+}
+.sort{
+    border: none;
+    width: 20%;
+    height: 5vh;
+    border-radius: 5px;
+}
+ .footer {
+    background: #000035;
+    color: white;
+    padding: 40px 20px 15px;
+    font-family: Arial, sans-serif;
+    margin-top: 200px;
+}
+
+.footer-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.footer-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.footer-subtitle {
+    font-weight: bold;
+    margin-top: 10px;
+}
+.foot{
+    width: 250px;
+    background-color: rgb(231, 210, 210);
+    border-radius: 5px;
+    padding: 20px;
+    color: #000035;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+.footer-list {
+    list-style: none;
+    margin-top: 10px;
+    padding: 0;
+}
+
+.footer-list li {
+    margin-bottom: 8px;
+}
+
+.footer-list a {
+    text-decoration: none;
+    color: white;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.footer-list a:hover {
+    opacity: 1;
+}
+
+.subscribe-box {
+    display: flex;
+    margin-top: 15px;
+}
+
+.subscribe-box input {
+    padding: 10px;
+    width: 70%;
+    border: none;
+    border-radius: 5px 0 0 5px;
+}
+
+.subscribe-box button {
+    padding: 10px 15px;
+    background: #e63946;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+}
+
+.subscribe-box button:hover {
+    background: #141010;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 14px;
+    opacity: 0.8;
+}
+  
+@media (max-width: 1024px) {
+
+    .parent{
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+    }
+
+    .cloth{
+        width: 100%;
+    }
+
+    .input-field input{
+        width: 220px;
+    }
+
+    .unorder{
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+
+    .sort{
+        width: 40%;
+    }
+}
+
+/* ===========================
+   📱 MOBILE (Phone)
+   =========================== */
+@media (max-width: 768px) {
+
+    nav{
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .input-field{
+        width: 100%;
+    }
+
+    .input-field input{
+        width: 100%;
+    }
+
+    .parent{
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .cloth{
+        width: 100%;
+    }
+
+    .unorder{
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .sort{
+        width: 100%;
+    }
+
+    footer{
+        margin-top: 100px;
+    }
+}

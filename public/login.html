@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+      <script src="https://kit.fontawesome.com/999358a4c6.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet" href="login.css">
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+</head>
+<style>
+    .her{
+    position: relative;
+}
+.her span{
+     position: absolute;
+        top: -4px;
+        right: -2px;
+        background-color:  #000035;
+        color: white;
+        border-radius: 50%;
+        padding: 3px 5px;
+        font-size: 6px;
+        font-weight: bold;
+}
+.box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 40px;
+    font-weight: bold;
+    width: 100%;
+    background-color: #000035;
+    height: 6vh;
+}
+.box p{
+    margin-top: auto;
+}
+.bb{
+    background-color: #000035;
+    color: white;
+}
+.under{
+    text-decoration: none;
+    color: white;
+}
+</style>
+<body>
+     <header class="bg-danger text-white text-center p-2 fw-bold">FREE SHIPPING ON ORDERS ABOVE 100K!</header>
+    <nav class="d-flex justify-content-center align-items-center p-3 border-bottom shadow-sm position-sticky top-0 bg-white gap-3">
+       <marquee behavior="scroll" direction="left"> <h2>MIKOLO.TSHIRTS.NG</h2></marquee>
+       
+     <div class="d-flex"> 
+        <input type="email" name="" id="" placeholder="Search for products, brands and more" class="form-control w-50">
+   <div class="but">
+      <button class="btn text-white" type="submit"><i class="fa-solid fa-arrow-right"></i></button>
+   </div>
+     </div>
+     <div class="d-flex fs-4 g-3 gap-4 ms-4">
+        <i class="fa-solid fa-user"></i>
+        <i class="fa-regular fa-heart her"><span>0</span></i>
+        <i class="fa-regular fa-message"></i>
+     </div>
+    </nav>
+    <div class="box text-white">
+        <p>All Accessories</p>
+        <p>Round Neck</p>
+        <p>V-Neck</p>
+        <p>Specials Offers</p>
+        <p>Active wear</p>
+        <p>Graphic Tees comming soon!</p>
+    </div>
+    <div class="login-box d-flex justify-content-center align-items-center flex-column mt-5">
+        <h2 class="mb-4">Login to your account</h2>
+        <form action="">
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" placeholder="Enter your email">
+            </div>
+            <label class="mb-2" for="password">password</label>
+                 <div class="input-group mb-3">
+        <input type="password" class="form-control" id="password" placeholder="Enter your password">
+        <span id="closed" class="input-group-text">
+            <i class="bi bi-eye-slash" id="togglePassword" style="cursor: pointer;" onclick="showPassword()"></i>
+        </span>
+        <div class="passwordW"></div>
+    </div>
+            <div>
+                <input  type="checkbox" id="remember-me" >
+                <label for="remember-me"> Remember me</label>
+            </div>
+            <button class="btn bb w-100 mt-1" id="login" type="submit" >Login</button>
+        </form>
+        <p class="mt-3">Don't have an account? <a href="signup.html">Sign up</a></p>
+
+        <script type="module">
+           
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDOP3Kss6Z0jHxzuHB7BM9jH_sR7JUhWrw",
+    authDomain: "my-first-e-commerce-1e208.firebaseapp.com",
+    projectId: "my-first-e-commerce-1e208",
+    storageBucket: "my-first-e-commerce-1e208.firebasestorage.app",
+    messagingSenderId: "237078006030",
+    appId: "1:237078006030:web:29da579748cf04c37c2f5f",
+    measurementId: "G-HXCLTNC0WQ"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth();
+
+
+
+        document.getElementById("login").addEventListener("click", () =>{
+             let email = document.getElementById("email").value;
+             let password = document.getElementById("password").value;
+
+              let emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+           let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{4,}$/
+
+            let emailTest = emailRegex.test(email)
+            let passwordTest =  passwordRegex.test(password)
+
+
+
+            if(email == "" || password == ""){
+                   document.getElementById("email").style.border = "2px solid red !important";
+             document.getElementById("email").style.borderColor = "red";
+   
+            document.getElementById("password").style.border = "2px solid red !important";
+            document.getElementById("password").style.borderColor = "red";
+            }
+           
+
+
+         const auth = getAuth();
+         signInWithEmailAndPassword(auth, email, password)
+         .then((userCredential) => {
+          // Signed in 
+         const user = userCredential.user;
+           // ...
+          })
+       .catch((error) => {
+        const errorCode = error.code;
+       const errorMessage = error.message;
+        });
+        })
+
+
+
+
+            const showPassword = () =>{
+                document.getElementById("closed").innerHTML = `<i class="bi bi-eye" id="togglePassword" style="cursor: pointer;" onclick="hidePassword()"></i>`;
+                document.getElementById("password").type = "text";
+            }
+            const hidePassword = () =>{
+                document.getElementById("closed").innerHTML = `<i class="bi bi-eye-slash" id="togglePassword" style="cursor: pointer;" onclick="showPassword()"></i>`;
+                document.getElementById("password").type = "password";
+            }
+        </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .cart-item { display:flex; gap:20px; margin-bottom:20px; padding:15px; border:1px solid #ddd; border-radius:10px; }
+        .cart-item img { width:120px; height:120px; object-fit:cover; border-radius:10px; }
+        .qty-box { display:flex; gap:10px; align-items:center; }
+        .qty-box button { width:32px; height:32px; border:none; background:black; color:white; border-radius:5px; }
+        .remove-btn { background:red; color:white; padding:5px 10px; border:none; border-radius:6px; margin-top:10px; }
+    </style>
+</head>
+<body class="p-4">
+
+<h2>Your Cart</h2>
+<div id="cartContainer"></div>
+<h3 class="mt-4">Total: ₦<span id="totalAmount">0</span></h3>
+
+<script>
+function loadCart(){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let container = document.getElementById("cartContainer");
+    let total = 0;
+    container.innerHTML = "";
+
+    if(cart.length === 0){ container.innerHTML="<p>Your cart is empty</p>"; return; }
+
+    cart.forEach((item, index) => {
+        total += item.discountedPrice * item.quantity;
+        let div = document.createElement("div");
+        div.classList.add("cart-item");
+        div.innerHTML = `
+            <img src="${item.imageUrl}">
+            <div>
+                <h4>${item.name}</h4>
+                <p>₦${item.discountedPrice}</p>
+                <div class="qty-box">
+                    <button onclick="changeQty(${index}, -1)">−</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="changeQty(${index}, 1)">+</button>
+                </div>
+                <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+            </div>
+        `;
+        container.appendChild(div);
+    });
+
+    document.getElementById("totalAmount").textContent = total.toLocaleString();
+}
+
+function changeQty(index, delta){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart[index].quantity += delta;
+    if(cart[index].quantity <= 0) cart[index].quantity = 1;
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+}
+
+function removeItem(index){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.splice(index,1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+}
+
+loadCart();
+</script>
+
+</body>
+</html>

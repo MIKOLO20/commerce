@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mikolo Tshirts</title>
+    <link rel="shortcut icon" href="./clothes/1-46-630x630.jpg" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/999358a4c6.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <header class="bg-danger text-white text-center p-2 fw-bold">
+        FREE SHIPPING ON ORDERS ABOVE 100K!
+    </header>
+<nav class="d-flex justify-content-between align-items-center p-3 border-bottom shadow-sm position-sticky top-0 z-2 bg-white">
+    <marquee><h2>MIKOLO.TSHIRTS.NG</h2></marquee>
+<div class="input-field d-flex gap-2">
+    <input type="text" id="query" placeholder="Search for Product, Brand & Design" />
+    <button type="button" id="searchBtn" class="btn btn-dark">
+        <i class="fa-solid fa-arrow-right"></i>
+    </button>
+</div>
+
+    
+    <div class="d-flex justify-content-center gap-3 align-items-center text-black">
+
+       
+        <a class="text-black" href="signup.html">
+            <i class="fa-solid fa-user fs-3"></i>
+        </a>
+
+        
+        <div class="wishlist-box position-relative">
+            <i class="fa-regular fa-heart nav-heart"></i>
+            <span class="nav-heart-count">0</span>
+        </div>
+
+       
+        <div class="cart-box position-relative">
+            <a class="text-black" href="cart.html">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+            <span class="nav-cart-count">0</span>
+        </div>
+
+    </div>
+
+</nav>
+
+
+<div class="modal fade" id="myModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title"></h4>
+               
+            </div>
+
+            <div class="modal-body" id="body"></div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+   
+<div class="box text-white">
+       <ul class="unorder">
+        <li class="com1">
+            <p class="com">All Accessories</p>
+            <div class="comm"> 
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+
+            </div>
+        </li>
+         <li class="com1">
+            <p class="com">Round Neck</p>
+            <div class="comm"> 
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+            </div>
+        </li>
+         <li class="com1">
+            <p class="com">V-Neck</p>
+            <div class="comm"> 
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+            </div>
+        </li>
+         <li class="com1">
+            <p class="com">Specilas Offers</p>
+            <div class="comm"> 
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+            </div>
+        </li>
+         <li class="com1">
+            <p class="com">Active wear</p>
+            <div class="comm"> 
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+            </div>
+        </li>
+         <li class="com1">
+            <p class="com">Graphic Tees</p>
+            <div class="comm"> 
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+                <p>coming soon!</p>
+            </div>
+        </li>
+       
+       </ul>
+    </div>
+
+    
+    <div class="d-flex justify-content-between align-items-center p-3 mt-5 container">
+        <p>Showing 1–9 Results</p>
+        <select class="sort">
+            <option>Sort by latest</option>
+            <option>Sort by price low to high</option>
+            <option>Sort by price high to low</option>
+            <option>Sort by popularity</option>
+        </select>
+    </div>
+
+    <main class="parent container" id="product"></main>
+
+    
+    <footer class="footer">
+        <div class="footer-container">
+
+            <div class="footer-box">
+                <h2 class="footer-title foot">Mikolo.Tshirts.ng</h2>
+                <p>Powered by excellence and quality</p>
+
+                <p class="footer-subtitle">Address:</p>
+                <p>Owoyemi house, Laderin, Abeokuta, Ogun State.</p>
+
+                <p class="footer-subtitle">Phone:</p>
+                <p>08167420253</p>
+
+                <p class="footer-subtitle">Email:</p>
+                <p>Mickymouse@tshirts.ng</p>
+            </div>
+
+            <div class="footer-box">
+                <h3 class="footer-subtitle">Follow Us</h3>
+                <ul class="footer-list">
+                    <li><a href="#">Instagram <i class="fa-brands fa-instagram"></i></a></li>
+                    <li><a href="#">Twitter <i class="fa-brands fa-x-twitter"></i></a></li>
+                    <li><a href="#">WhatsApp <i class="fa-brands fa-whatsapp"></i></a></li>
+                </ul>
+            </div>
+
+            <div class="footer-box">
+                <h3 class="footer-subtitle">Quick Links</h3>
+                <ul class="footer-list">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Shop</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom text-center mt-3 pt-2">
+            Mikolo.Tshirts.ng © All rights reserved.
+        </div>
+    </footer>
+
+ <script>
+let wishlistCount = 0;
+
+const navbarHeart = document.querySelector(".nav-heart");
+const navbarHeartCount = document.querySelector(".nav-heart-count");
+const navbarCartCount = document.querySelector(".nav-cart-count");
+
+let product = [
+    { id: 1, name: "High-Grade Dark grey T-shirt", originalPrice: 39000, discountedPrice: 29970, sizes: ["M","L","XL"], imageUrl: "./clothes/1-46-630x630.jpg" },
+    { id: 2, name: "Army-Green T-shirt", originalPrice: 39000, discountedPrice: 29970, sizes: ["M","L","XL"], imageUrl: "./clothes/1-47-630x630.jpg" },
+    { id: 3, name: "Coral red T-shirt", originalPrice: 39000, discountedPrice: 29970, sizes: ["M","L","XL"], imageUrl: "./clothes/1-48-630x630.jpg" },
+    { id: 4, name: "Almond T-shirt", originalPrice: 39000, discountedPrice: 29970, sizes: ["M","L","XL"], imageUrl: "./clothes/1-49-630x630.jpg" },
+    { id: 5, name: "Army-Green T-shirt", originalPrice: 39000, discountedPrice: 29970, sizes: ["M","L","XL"], imageUrl: "./clothes/1-50-630x630.jpg" },
+    { id: 6, name: "Light blue Hoodie", originalPrice: 69000, discountedPrice: 49970, sizes: ["M","L","XL"], imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKUB1Ahj3znOtZBwWRo5WC6NSoqzbuOtZ5bg&s" },
+    { id: 7, name: "Deep-orange Hoodie", originalPrice: 69000, discountedPrice: 49970, sizes: ["M","L","XL"], imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrWMGE16b_TDNFis3ch3Sn8F0pxeQxWWLG_g&s" },
+    { id: 8, name: "Yellow Hoodie", originalPrice: 69000, discountedPrice: 49970, sizes: ["M","L","XL"], imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSF5Y90QzR4got7vCBLLKEVjtxvVfVey5oJ7Q&s" },
+    { id: 9, name: "Black Hoodie", originalPrice: 69000, discountedPrice: 49970, sizes: ["M","L","XL"], imageUrl: "https://www.flannels.com/images/imgzoom/53/53750903_xxl.jpg" }
+];
+
+const productContainer = document.getElementById("product");
+
+const displayProducts = () => {
+    productContainer.innerHTML = product.map(p => `
+        <div class="cloth">
+            <div class="img-box">
+                <img src="${p.imageUrl}" alt="${p.name}" />
+                <div class="cart-hover" data-id="${p.id}">🛒</div>
+                <div class="top d-flex justify-content-between align-items-center text-white est">
+                    <button class="pp">UP TO -23%</button>
+                    <div class="ppp">
+                        <i class="fa-regular fa-heart wishlist-icon" data-id="${p.id}"></i>
+                    </div>
+                </div>
+            </div>
+            <p class="text-start">${p.name}</p>
+            <p class="text-start"><span class="line">₦${p.originalPrice}</span> ₦${p.discountedPrice}</p>
+            <h3 class="text-start">SIZE</h3>
+            <div class="d-flex gap-2">
+                ${p.sizes.map(size => `<button class="btn btn-outline-light">${size}</button>`).join("")}
+            </div>
+        </div>
+    `).join("");
+};
+
+displayProducts();
+
+const searchBtn = document.getElementById("searchBtn");
+
+searchBtn.addEventListener("click", () => {
+    const query = document.getElementById("query").value.trim().toLowerCase();
+    const modalBody = document.getElementById("body");
+
+    if (!query) {
+        modalBody.innerHTML = "<h4>Please enter a valid search</h4>";
+    } else {
+        const results = product.filter(p =>
+            p.name.toLowerCase().includes(query) ||
+            p.sizes.some(size => size.toLowerCase().includes(query))
+        );
+
+        if (results.length === 0) {
+            modalBody.innerHTML = "<h4>No products found</h4>";
+        } else {
+            modalBody.innerHTML = results.map(p => `
+                <div class="cloth mb-4">
+                    <div class="img-box">
+                        <img src="${p.imageUrl}" style="width:100%; height:200px; border-radius:8px" />
+                        <div class="cart-hover" data-id="${p.id}">🛒</div>
+                    </div>
+                    <p>${p.name}</p>
+                    <p><span class="line">₦${p.originalPrice}</span> ₦${p.discountedPrice}</p>
+                </div>
+            `).join("");
+        }
+    }
+
+    const myModal = new bootstrap.Modal(document.getElementById('myModal'));
+    myModal.show();
+});
+
+let savedCart = JSON.parse(localStorage.getItem("cart")) || [];
+navbarCartCount.textContent = savedCart.reduce((sum, item) => sum + item.quantity, 0);
+
+function addToCart(id){
+    let selectedProduct = product.find(p => p.id === id);
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let existing = cart.find(item => item.id === id);
+
+    if(existing){
+        existing.quantity += 1;
+    } else {
+        cart.push({
+            id: selectedProduct.id,
+            name: selectedProduct.name,
+            discountedPrice: selectedProduct.discountedPrice,
+            imageUrl: selectedProduct.imageUrl,
+            quantity: 1
+        });
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    navbarCartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+}
+
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("cart-hover")) {
+        let id = parseInt(e.target.dataset.id);
+        addToCart(id);
+    }
+
+    if (e.target.classList.contains("wishlist-icon")) {
+        let icon = e.target;
+        icon.classList.toggle("active");
+        if (icon.classList.contains("active")) {
+            wishlistCount++;
+            icon.classList.replace("fa-regular", "fa-solid");
+        } else {
+            wishlistCount--;
+            icon.classList.replace("fa-solid", "fa-regular");
+        }
+        navbarHeartCount.textContent = wishlistCount;
+    }
+});
+</script>
+
+
+    <script src="https://cdn.jsdzelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
