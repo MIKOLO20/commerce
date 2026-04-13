@@ -121,6 +121,13 @@
 
     <script>
         // Initialize Firebase
+        console.log("Script started - checking firebase...", typeof firebase);
+        
+        if (typeof firebase === 'undefined') {
+            console.error("Firebase library not loaded!");
+            alert("Firebase not loaded - page may not have loaded properly. Try refreshing.");
+        }
+
         const firebaseConfig = {
             apiKey: "AIzaSyDOP3Kss6Z0jHxzuHB7BM9jH_sR7JUhWrw",
             authDomain: "my-first-e-commerce-1e208.firebaseapp.com",
@@ -130,11 +137,17 @@
             appId: "1:237078006030:web:29da579748cf04c37c2f5f"
         };
 
-        firebase.initializeApp(firebaseConfig);
+        try {
+            firebase.initializeApp(firebaseConfig);
+            console.log("Firebase initialized successfully");
+        } catch (e) {
+            console.error("Firebase initialization error:", e);
+        }
+
         const auth = firebase.auth();
         const db = firebase.database();
 
-        console.log("Firebase loaded and initialized");
+        console.log("Auth available:", !!auth, "DB available:", !!db);
 
         // Toggle password visibility
         function showPassword() {
@@ -147,104 +160,150 @@
             pwd.type = pwd.type === "password" ? "text" : "password";
         }
 
-        // Handle Sign Up
-        document.getElementById("submit").addEventListener("click", function() {
-            const name = document.getElementById("name").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value;
-            const passwordConfirm = document.getElementById("passwordConfirm").value;
-            const terms = document.getElementById("terms").checked;
+        // Wait for DOM to be ready
+        function attachEventListeners() {
+            const submitBtn = document.getElementById("submit");
+            const googleBtn = document.getElementById("google");
 
-            console.log("Sign up button clicked - name:", name, "email:", email);
-
-            // Validation
-            let errors = [];
-            if (!name || name.length < 3) errors.push("nameW", "Name must be at least 3 characters");
-            if (!email || !email.includes("@")) errors.push("emailW", "Valid email required");
-            if (!password || password.length < 4) errors.push("passwordW", "Password must be 4+ characters");
-            if (password !== passwordConfirm) errors.push("passwordConfirmW", "Passwords don't match");
-            if (!terms) {
-                alert("Please agree to Terms and Conditions");
+            if (!submitBtn) {
+                console.error("Submit button not found in DOM");
+                return;
+            }
+            if (!googleBtn) {
+                console.error("Google button not found in DOM");
                 return;
             }
 
-            // Show errors
-            document.getElementById("nameW").textContent = "";
-            document.getElementById("emailW").textContent = "";
-            document.getElementById("passwordW").textContent = "";
-            document.getElementById("passwordConfirmW").textContent = "";
+            console.log("Attaching event listeners to buttons...");
 
-            for (let i = 0; i < errors.length; i += 2) {
-                document.getElementById(errors[i]).textContent = errors[i+1];
-            }
+            // Handle Sign Up
+            submitBtn.addEventListener("click", function() {
+                const name = document.getElementById("name").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const password = document.getElementById("password").value;
+                const passwordConfirm = document.getElementById("passwordConfirm").value;
+                const terms = document.getElementById("terms").checked;
 
-            if (errors.length > 0) return;
+                console.log("Sign up button clicked - name:", name, "email:", email);
 
-            // Create account
-            const btn = this;
-            btn.innerHTML = "Creating account...";
-            btn.disabled = true;
+                // Validation
+                let errors = [];
+                if (!name || name.length < 3) errors.push("nameW", "Name must be at least 3 characters");
+                if (!email || !email.includes("@")) errors.push("emailW", "Valid email required");
+                if (!password || password.length < 4) errors.push("passwordW", "Password must be 4+ characters");
+                if (password !== passwordConfirm) errors.push("passwordConfirmW", "Passwords don't match");
+                if (!terms) {
+                    alert("Please agree to Terms and Conditions");
+                    return;
+                }
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    console.log("User created:", userCredential.user.uid);
-                    
-                    // Save to database
-                    db.ref("users/" + userCredential.user.uid).set({
-                        name: name,
-                        email: email,
-                        createdAt: new Date().toISOString()
+                // Show errors
+                document.getElementById("nameW").textContent = "";
+                document.getElementById("emailW").textContent = "";
+                document.getElementById("passwordW").textContent = "";
+                document.getElementById("passwordConfirmW").textContent = "";
+
+                for (let i = 0; i < errors.length; i += 2) {
+                    document.getElementById(errors[i]).textContent = errors[i+1];
+                }
+
+                if (errors.length > 0) return;
+
+                // Create account
+                const btn = this;
+                btn.innerHTML = "Creating account...";
+                btn.disabled = true;
+
+                console.log("Calling createUserWithEmailAndPassword...");
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then(userCredential => {
+                        console.log("User created:", userCredential.user.uid);
+                        
+                        // Save to database
+                        db.ref("users/" + userCredential.user.uid).set({
+                            name: name,
+                            email: email,
+                            createdAt: new Date().toISOString()
+                        });
+
+                        // Store session
+                        localStorage.setItem("currentUser", JSON.stringify({
+                            uid: userCredential.user.uid,
+                            email: userCredential.user.email,
+                            displayName: name,
+                            isLoggedIn: true
+                        }));
+
+                        const statusDiv = document.getElementById("signupStatus");
+                        statusDiv.className = "mt-3 alert alert-success";
+                        statusDiv.textContent = "Account created! Redirecting...";
+                        statusDiv.style.display = "block";
+
+                        setTimeout(() => {
+                            window.location.href = "index.html";
+                        }, 1500);
+                    })
+                    .catch(error => {
+                        console.error("Firebase error:", error.code, error.message);
+                        const statusDiv = document.getElementById("signupStatus");
+                        statusDiv.className = "mt-3 alert alert-danger";
+                        statusDiv.textContent = "Error: " + error.message;
+                        statusDiv.style.display = "block";
+
+                        btn.innerHTML = "Sign Up";
+                        btn.disabled = false;
                     });
+            });
 
-                    // Store session
-                    localStorage.setItem("currentUser", JSON.stringify({
-                        uid: userCredential.user.uid,
-                        email: userCredential.user.email,
-                        displayName: name,
-                        isLoggedIn: true
-                    }));
+            // Handle Google Sign Up
+            googleBtn.addEventListener("click", function() {
+                console.log("Google button clicked");
+                const provider = new firebase.auth.GoogleAuthProvider();
+                const btn = this;
+                btn.innerHTML = "Signing in...";
+                btn.disabled = true;
 
-                    const statusDiv = document.getElementById("signupStatus");
-                    statusDiv.className = "mt-3 alert alert-success";
-                    statusDiv.textContent = "Account created! Redirecting...";
-                    statusDiv.style.display = "block";
+                console.log("Calling signInWithPopup...");
+                auth.signInWithPopup(provider)
+                    .then(result => {
+                        console.log("Google sign up success");
+                        localStorage.setItem("currentUser", JSON.stringify({
+                            uid: result.user.uid,
+                            email: result.user.email,
+                            displayName: result.user.displayName,
+                            isLoggedIn: true
+                        }));
 
-                    setTimeout(() => {
-                        window.location.href = "index.html";
-                    }, 1500);
-                })
-                .catch(error => {
-                    console.log("Error:", error.message);
-                    const statusDiv = document.getElementById("signupStatus");
-                    statusDiv.className = "mt-3 alert alert-danger";
-                    statusDiv.textContent = "Error: " + error.message;
-                    statusDiv.style.display = "block";
+                        const statusDiv = document.getElementById("signupStatus");
+                        statusDiv.className = "mt-3 alert alert-success";
+                        statusDiv.textContent = "Signed up successfully! Redirecting...";
+                        statusDiv.style.display = "block";
 
-                    btn.innerHTML = "Sign Up";
-                    btn.disabled = false;
-                });
-        });
+                        setTimeout(() => {
+                            window.location.href = "index.html";
+                        }, 1500);
+                    })
+                    .catch(error => {
+                        console.error("Google sign up error:", error.code, error.message);
+                        const statusDiv = document.getElementById("signupStatus");
+                        statusDiv.className = "mt-3 alert alert-danger";
+                        statusDiv.textContent = "Error: " + error.message;
+                        statusDiv.style.display = "block";
 
-        // Handle Google Sign Up
-        document.getElementById("google").addEventListener("click", function() {
-            console.log("Google button clicked");
-            const provider = new firebase.auth.GoogleAuthProvider();
-            const btn = this;
-            btn.innerHTML = "Signing in...";
-            btn.disabled = true;
+                        btn.innerHTML = '<span class="text-primary">G</span><span class="text-danger">o</span><span class="text-warning">o</span><span class="text-primary">g</span><span class="text-secondary">l</span><span class="text-danger">e</span>';
+                        btn.disabled = false;
+                    });
+            });
 
-            auth.signInWithPopup(provider)
-                .then(result => {
-                    console.log("Google sign up success");
-                    localStorage.setItem("currentUser", JSON.stringify({
-                        uid: result.user.uid,
-                        email: result.user.email,
-                        displayName: result.user.displayName,
-                        isLoggedIn: true
-                    }));
+            console.log("Event listeners attached successfully");
+        }
 
-                    const statusDiv = document.getElementById("signupStatus");
-                    statusDiv.className = "mt-3 alert alert-success";
+        // Attach listeners when DOM is ready
+        if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", attachEventListeners);
+        } else {
+            attachEventListeners();
+        }
                     statusDiv.textContent = "Google sign up successful! Redirecting...";
                     statusDiv.style.display = "block";
 

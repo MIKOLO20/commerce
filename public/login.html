@@ -9,7 +9,6 @@
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
       <script src="https://kit.fontawesome.com/999358a4c6.js" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="login.css">
-       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
     <!-- Firebase CDN -->
     <script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js"></script>
@@ -104,6 +103,13 @@
         <p class="mt-3">Don't have an account? <a href="signup.html">Sign up</a></p>
 
         <script>
+            console.log("Login script started - checking firebase...", typeof firebase);
+            
+            if (typeof firebase === 'undefined') {
+                console.error("Firebase library not loaded!");
+                alert("Firebase not loaded - page may not have loaded properly. Try refreshing.");
+            }
+
             const firebaseConfig = {
                 apiKey: "AIzaSyDOP3Kss6Z0jHxzuHB7BM9jH_sR7JUhWrw",
                 authDomain: "my-first-e-commerce-1e208.firebaseapp.com",
@@ -114,102 +120,136 @@
                 measurementId: "G-HXCLTNC0WQ"
             };
 
-            firebase.initializeApp(firebaseConfig);
+            try {
+                firebase.initializeApp(firebaseConfig);
+                console.log("Firebase initialized successfully for login");
+            } catch (e) {
+                console.error("Firebase initialization error:", e);
+            }
+
             const auth = firebase.auth();
-            console.log("Firebase initialized for login");
+            const db = firebase.database();
 
-            document.getElementById("login").addEventListener("click", (e) => {
-                e.preventDefault();
-                let email = document.getElementById("email").value.trim();
-                let password = document.getElementById("password").value;
+            console.log("Auth available:", !!auth, "DB available:", !!db);
 
-                let emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
-                let emailTest = emailRegex.test(email)
+            function attachLoginListeners() {
+                const loginBtn = document.getElementById("login");
 
-                // Reset error states
-                document.getElementById("email").style.border = "";
-                document.getElementById("password").style.border = "";
-                document.getElementById("emailW").innerHTML = "";
-                document.querySelector(".passwordW").innerHTML = "";
-
-                let isValid = true;
-
-                if (!email) {
-                    document.getElementById("email").style.border = "2px solid red";
-                    document.getElementById("emailW").innerHTML = '<p class="text-danger">Email is required</p>';
-                    isValid = false;
-                } else if (!emailTest) {
-                    document.getElementById("email").style.border = "2px solid red";
-                    document.getElementById("emailW").innerHTML = '<p class="text-danger">Email must be valid</p>';
-                    isValid = false;
+                if (!loginBtn) {
+                    console.error("Login button not found in DOM");
+                    return;
                 }
 
-                if (!password) {
-                    document.getElementById("password").style.border = "2px solid red";
-                    document.querySelector(".passwordW").innerHTML = '<p class="text-danger">Password is required</p>';
-                    isValid = false;
-                }
+                console.log("Attaching event listeners to login button...");
 
-                if (!isValid) return;
+                loginBtn.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    let email = document.getElementById("email").value.trim();
+                    let password = document.getElementById("password").value;
 
-                // Show loading state
-                let loginBtn = document.getElementById("login");
-                let originalText = loginBtn.innerHTML;
-                loginBtn.innerHTML = "Logging in...";
-                loginBtn.disabled = true;
+                    let emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+                    let emailTest = emailRegex.test(email)
 
-                firebase.auth().signInWithEmailAndPassword(email, password)
-                    .then((userCredential) => {
-                        const user = userCredential.user;
-                        
-                        // Store user session
-                        localStorage.setItem("currentUser", JSON.stringify({
-                            uid: user.uid,
-                            email: user.email,
-                            displayName: user.displayName || email,
-                            isLoggedIn: true
-                        }));
-                        
-                        // Success feedback
-                        let statusDiv = document.getElementById("loginStatus");
-                        statusDiv.className = "alert alert-success";
-                        statusDiv.innerHTML = "Login successful! Redirecting...";
-                        statusDiv.style.display = "block";
+                    console.log("Login button clicked - email:", email);
 
-                        // Store remember me preference
-                        if (document.getElementById("remember-me").checked) {
-                            localStorage.setItem("rememberMe", JSON.stringify({
-                                email: email,
-                                uid: user.uid
+                    // Reset error states
+                    document.getElementById("email").style.border = "";
+                    document.getElementById("password").style.border = "";
+                    document.getElementById("emailW").innerHTML = "";
+                    document.querySelector(".passwordW").innerHTML = "";
+
+                    let isValid = true;
+
+                    if (!email) {
+                        document.getElementById("email").style.border = "2px solid red";
+                        document.getElementById("emailW").innerHTML = '<p class="text-danger">Email is required</p>';
+                        isValid = false;
+                    } else if (!emailTest) {
+                        document.getElementById("email").style.border = "2px solid red";
+                        document.getElementById("emailW").innerHTML = '<p class="text-danger">Email must be valid</p>';
+                        isValid = false;
+                    }
+
+                    if (!password) {
+                        document.getElementById("password").style.border = "2px solid red";
+                        document.querySelector(".passwordW").innerHTML = '<p class="text-danger">Password is required</p>';
+                        isValid = false;
+                    }
+
+                    if (!isValid) return;
+
+                    // Show loading state
+                    let loginBtn = document.getElementById("login");
+                    let originalText = loginBtn.innerHTML;
+                    loginBtn.innerHTML = "Logging in...";
+                    loginBtn.disabled = true;
+
+                    console.log("Calling signInWithEmailAndPassword...");
+                    firebase.auth().signInWithEmailAndPassword(email, password)
+                        .then((userCredential) => {
+                            const user = userCredential.user;
+                            
+                            console.log("Login successful:", user.uid);
+
+                            // Store user session
+                            localStorage.setItem("currentUser", JSON.stringify({
+                                uid: user.uid,
+                                email: user.email,
+                                displayName: user.displayName || email,
+                                isLoggedIn: true
                             }));
-                        }
+                            
+                            // Success feedback
+                            let statusDiv = document.getElementById("loginStatus");
+                            statusDiv.className = "alert alert-success";
+                            statusDiv.innerHTML = "Login successful! Redirecting...";
+                            statusDiv.style.display = "block";
 
-                        setTimeout(() => {
-                            window.location.href = "index.html";
-                        }, 1500);
-                    })
-                    .catch((error) => {
-                        let statusDiv = document.getElementById("loginStatus");
-                        statusDiv.className = "alert alert-danger";
-                        
-                        let errorMsg = "An error occurred. Please try again.";
-                        if (error.code === "auth/user-not-found") {
-                            errorMsg = "No account found with this email.";
-                        } else if (error.code === "auth/wrong-password") {
-                            errorMsg = "Incorrect password.";
-                        } else if (error.code === "auth/invalid-email") {
-                            errorMsg = "Invalid email address.";
-                        } else if (error.code === "auth/user-disabled") {
-                            errorMsg = "This account has been disabled.";
-                        }
-                        
-                        statusDiv.innerHTML = `Error: ${errorMsg}`;
-                        statusDiv.style.display = "block";
+                            // Store remember me preference
+                            if (document.getElementById("remember-me").checked) {
+                                localStorage.setItem("rememberMe", JSON.stringify({
+                                    email: email,
+                                    uid: user.uid
+                                }));
+                            }
 
-                        loginBtn.innerHTML = originalText;
-                        loginBtn.disabled = false;
-                    });
-            });
+                            setTimeout(() => {
+                                window.location.href = "index.html";
+                            }, 1500);
+                        })
+                        .catch((error) => {
+                            console.error("Login error:", error.code, error.message);
+                            let statusDiv = document.getElementById("loginStatus");
+                            statusDiv.className = "alert alert-danger";
+                            
+                            let errorMsg = "An error occurred. Please try again.";
+                            if (error.code === "auth/user-not-found") {
+                                errorMsg = "No account found with this email.";
+                            } else if (error.code === "auth/wrong-password") {
+                                errorMsg = "Incorrect password.";
+                            } else if (error.code === "auth/invalid-email") {
+                                errorMsg = "Invalid email address.";
+                            } else if (error.code === "auth/user-disabled") {
+                                errorMsg = "This account has been disabled.";
+                            }
+                            
+                            statusDiv.innerHTML = `Error: ${errorMsg}`;
+                            statusDiv.style.display = "block";
+
+                            loginBtn.innerHTML = originalText;
+                            loginBtn.disabled = false;
+                        });
+                });
+
+                console.log("Login event listener attached successfully");
+            }
+
+            // Attach listeners when DOM is ready
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", attachLoginListeners);
+            } else {
+                attachLoginListeners();
+            }
         </script>
 
         <script>
