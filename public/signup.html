@@ -270,25 +270,6 @@
             init();
         }
     </script>
-                    statusDiv.textContent = "Google sign up successful! Redirecting...";
-                    statusDiv.style.display = "block";
-
-                    setTimeout(() => {
-                        window.location.href = "index.html";
-                    }, 1500);
-                })
-                .catch(error => {
-                    console.log("Google error:", error.message);
-                    btn.innerHTML = '<span class="text-primary">G</span><span class="text-danger">o</span><span class="text-warning">o</span><span class="text-primary">g</span><span class="text-secondary">l</span><span class="text-danger">e</span>';
-                    btn.disabled = false;
-
-                    const statusDiv = document.getElementById("signupStatus");
-                    statusDiv.className = "mt-3 alert alert-danger";
-                    statusDiv.textContent = "Error: " + error.message;
-                    statusDiv.style.display = "block";
-                });
-        });
-    </script>
 
     <script>
         const showPassword = () =>{
