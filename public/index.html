@@ -3,66 +3,80 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mikolo Tshirts</title>
+    <meta name="description" content="Mikolo T-shirts - High-quality t-shirts and hoodies for affordable prices" />
+    <title>Mikolo Tshirts - Quality T-shirts & Hoodies</title>
     <link rel="shortcut icon" href="./clothes/1-46-630x630.jpg" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" />
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/999358a4c6.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
+    <!-- Promo Banner -->
     <header class="bg-danger text-white text-center p-2 fw-bold">
         FREE SHIPPING ON ORDERS ABOVE 100K!
     </header>
-<nav class="d-flex justify-content-between align-items-center p-3 border-bottom shadow-sm position-sticky top-0 z-2 bg-white">
-    <marquee><h2>MIKOLO.TSHIRTS.NG</h2></marquee>
-<div class="input-field d-flex gap-2">
-    <input type="text" id="query" placeholder="Search for Product, Brand & Design" />
-    <button type="button" id="searchBtn" class="btn btn-dark">
-        <i class="fa-solid fa-arrow-right"></i>
-    </button>
-</div>
 
-    
-    <div class="d-flex justify-content-center gap-3 align-items-center text-black">
-
-       
-        <a class="text-black" href="signup.html">
-            <i class="fa-solid fa-user fs-3"></i>
-        </a>
-
-        
-        <div class="wishlist-box position-relative">
-            <i class="fa-regular fa-heart nav-heart"></i>
-            <span class="nav-heart-count">0</span>
-        </div>
-
-       
-        <div class="cart-box position-relative">
-            <a class="text-black" href="cart.html">
-                <i class="fa-solid fa-cart-shopping"></i>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <span class="text-dark">MIKOLO</span>.TSHIRTS.NG
             </a>
-            <span class="nav-cart-count">0</span>
+            
+            <!-- Search Bar for Desktop -->
+            <div class="search-container d-none d-lg-flex flex-grow-1 mx-3">
+                <input type="text" id="query" class="form-control" placeholder="Search for Product, Brand & Design" />
+                <button type="button" id="searchBtn" class="btn btn-dark">
+                    <i class="fa-solid fa-search"></i>
+                </button>
+            </div>
+
+            <!-- Right Icons -->
+            <div class="d-flex justify-content-center gap-3 align-items-center text-black">
+
+                <a class="text-black text-decoration-none" href="signup.html" title="Account">
+                    <i class="fa-solid fa-user fs-5"></i>
+                </a>
+                
+                <div class="wishlist-box position-relative">
+                    <i class="fa-regular fa-heart nav-heart cursor-pointer" title="Wishlist"></i>
+                    <span class="nav-heart-count">0</span>
+                </div>
+                
+                <div class="cart-box position-relative">
+                    <a class="text-black text-decoration-none" href="cart.html" title="Cart">
+                        <i class="fa-solid fa-cart-shopping fs-5"></i>
+                    </a>
+                    <span class="nav-cart-count">0</span>
+                </div>
+            </div>
         </div>
+    </nav>
 
+    <!-- Search Bar for Mobile -->
+    <div class="search-container-mobile d-lg-none p-3">
+        <div class="input-group">
+            <input type="text" id="query-mobile" class="form-control" placeholder="Search products..." />
+            <button class="btn btn-dark" id="searchBtn-mobile" type="button">
+                <i class="fa-solid fa-search"></i>
+            </button>
+        </div>
     </div>
-
-</nav>
 
 
 <div class="modal fade" id="myModal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title"></h4>
-               
+                <h4 class="modal-title">Search Results</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body" id="body"></div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
 
         </div>
@@ -70,78 +84,87 @@
 </div>
 
    
-<div class="box text-white">
-       <ul class="unorder">
-        <li class="com1">
-            <p class="com">All Accessories</p>
-            <div class="comm"> 
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-
-            </div>
-        </li>
-         <li class="com1">
-            <p class="com">Round Neck</p>
-            <div class="comm"> 
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-            </div>
-        </li>
-         <li class="com1">
-            <p class="com">V-Neck</p>
-            <div class="comm"> 
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-            </div>
-        </li>
-         <li class="com1">
-            <p class="com">Specilas Offers</p>
-            <div class="comm"> 
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-            </div>
-        </li>
-         <li class="com1">
-            <p class="com">Active wear</p>
-            <div class="comm"> 
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-            </div>
-        </li>
-         <li class="com1">
-            <p class="com">Graphic Tees</p>
-            <div class="comm"> 
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-                <p>coming soon!</p>
-            </div>
-        </li>
-       
-       </ul>
+<!-- Categories Menu -->
+    <div class="categories-menu bg-dark text-white py-3">
+        <div class="container-fluid">
+            <ul class="category-list">
+                <li class="category-item">
+                    <span class="category-title">All Accessories</span>
+                    <div class="category-dropdown">
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                    </div>
+                </li>
+                <li class="category-item">
+                    <span class="category-title">Round Neck</span>
+                    <div class="category-dropdown">
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                    </div>
+                </li>
+                <li class="category-item">
+                    <span class="category-title">V-Neck</span>
+                    <div class="category-dropdown">
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                    </div>
+                </li>
+                <li class="category-item">
+                    <span class="category-title">Special Offers</span>
+                    <div class="category-dropdown">
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                    </div>
+                </li>
+                <li class="category-item">
+                    <span class="category-title">Activewear</span>
+                    <div class="category-dropdown">
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                    </div>
+                </li>
+                <li class="category-item">
+                    <span class="category-title">Graphic Tees</span>
+                    <div class="category-dropdown">
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                        <p>Coming soon!</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 
     
-    <div class="d-flex justify-content-between align-items-center p-3 mt-5 container">
-        <p>Showing 1–9 Results</p>
-        <select class="sort">
-            <option>Sort by latest</option>
-            <option>Sort by price low to high</option>
-            <option>Sort by price high to low</option>
-            <option>Sort by popularity</option>
-        </select>
+    <!-- Filter & Sort Section -->
+    <div class="filter-section container my-4">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="mb-0 text-muted"><small>Showing 1–9 Results</small></p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <select class="sort-dropdown form-select form-select-sm" style="max-width: 250px;">
+                    <option>Sort by latest</option>
+                    <option>Sort by price low to high</option>
+                    <option>Sort by price high to low</option>
+                    <option>Sort by popularity</option>
+                </select>
+            </div>
+        </div>
     </div>
 
-    <main class="parent container" id="product"></main>
+    <!-- Product Grid -->
+    <main class="product-grid container mb-5" id="product"></main>
 
     
     <footer class="footer">
@@ -152,10 +175,10 @@
                 <p>Powered by excellence and quality</p>
 
                 <p class="footer-subtitle">Address:</p>
-                <p>Owoyemi house, Laderin, Abeokuta, Ogun State.</p>
+                <p>Lagos city</p>
 
                 <p class="footer-subtitle">Phone:</p>
-                <p>08167420253</p>
+                <p>080 000 0000</p>
 
                 <p class="footer-subtitle">Email:</p>
                 <p>Mickymouse@tshirts.ng</p>
@@ -186,133 +209,16 @@
         </div>
     </footer>
 
- <script>
-let wishlistCount = 0;
-
-const navbarHeart = document.querySelector(".nav-heart");
-const navbarHeartCount = document.querySelector(".nav-heart-count");
-const navbarCartCount = document.querySelector(".nav-cart-count");
-
-let product = [
-    { id: 1, name: "High-Grade Dark grey T-shirt", originalPrice: 39000, discountedPrice: 29970, sizes: ["M","L","XL"], imageUrl: "./clothes/1-46-630x630.jpg" },
-    { id: 2, name: "Army-Green T-shirt", originalPrice: 39000, discountedPrice: 29970, sizes: ["M","L","XL"], imageUrl: "./clothes/1-47-630x630.jpg" },
-    { id: 3, name: "Coral red T-shirt", originalPrice: 39000, discountedPrice: 29970, sizes: ["M","L","XL"], imageUrl: "./clothes/1-48-630x630.jpg" },
-    { id: 4, name: "Almond T-shirt", originalPrice: 39000, discountedPrice: 29970, sizes: ["M","L","XL"], imageUrl: "./clothes/1-49-630x630.jpg" },
-    { id: 5, name: "Army-Green T-shirt", originalPrice: 39000, discountedPrice: 29970, sizes: ["M","L","XL"], imageUrl: "./clothes/1-50-630x630.jpg" },
-    { id: 6, name: "Light blue Hoodie", originalPrice: 69000, discountedPrice: 49970, sizes: ["M","L","XL"], imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKUB1Ahj3znOtZBwWRo5WC6NSoqzbuOtZ5bg&s" },
-    { id: 7, name: "Deep-orange Hoodie", originalPrice: 69000, discountedPrice: 49970, sizes: ["M","L","XL"], imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrWMGE16b_TDNFis3ch3Sn8F0pxeQxWWLG_g&s" },
-    { id: 8, name: "Yellow Hoodie", originalPrice: 69000, discountedPrice: 49970, sizes: ["M","L","XL"], imageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSF5Y90QzR4got7vCBLLKEVjtxvVfVey5oJ7Q&s" },
-    { id: 9, name: "Black Hoodie", originalPrice: 69000, discountedPrice: 49970, sizes: ["M","L","XL"], imageUrl: "https://www.flannels.com/images/imgzoom/53/53750903_xxl.jpg" }
-];
-
-const productContainer = document.getElementById("product");
-
-const displayProducts = () => {
-    productContainer.innerHTML = product.map(p => `
-        <div class="cloth">
-            <div class="img-box">
-                <img src="${p.imageUrl}" alt="${p.name}" />
-                <div class="cart-hover" data-id="${p.id}">🛒</div>
-                <div class="top d-flex justify-content-between align-items-center text-white est">
-                    <button class="pp">UP TO -23%</button>
-                    <div class="ppp">
-                        <i class="fa-regular fa-heart wishlist-icon" data-id="${p.id}"></i>
-                    </div>
-                </div>
-            </div>
-            <p class="text-start">${p.name}</p>
-            <p class="text-start"><span class="line">₦${p.originalPrice}</span> ₦${p.discountedPrice}</p>
-            <h3 class="text-start">SIZE</h3>
-            <div class="d-flex gap-2">
-                ${p.sizes.map(size => `<button class="btn btn-outline-light">${size}</button>`).join("")}
-            </div>
-        </div>
-    `).join("");
-};
-
-displayProducts();
-
-const searchBtn = document.getElementById("searchBtn");
-
-searchBtn.addEventListener("click", () => {
-    const query = document.getElementById("query").value.trim().toLowerCase();
-    const modalBody = document.getElementById("body");
-
-    if (!query) {
-        modalBody.innerHTML = "<h4>Please enter a valid search</h4>";
-    } else {
-        const results = product.filter(p =>
-            p.name.toLowerCase().includes(query) ||
-            p.sizes.some(size => size.toLowerCase().includes(query))
-        );
-
-        if (results.length === 0) {
-            modalBody.innerHTML = "<h4>No products found</h4>";
-        } else {
-            modalBody.innerHTML = results.map(p => `
-                <div class="cloth mb-4">
-                    <div class="img-box">
-                        <img src="${p.imageUrl}" style="width:100%; height:200px; border-radius:8px" />
-                        <div class="cart-hover" data-id="${p.id}">🛒</div>
-                    </div>
-                    <p>${p.name}</p>
-                    <p><span class="line">₦${p.originalPrice}</span> ₦${p.discountedPrice}</p>
-                </div>
-            `).join("");
-        }
-    }
-
-    const myModal = new bootstrap.Modal(document.getElementById('myModal'));
-    myModal.show();
-});
-
-let savedCart = JSON.parse(localStorage.getItem("cart")) || [];
-navbarCartCount.textContent = savedCart.reduce((sum, item) => sum + item.quantity, 0);
-
-function addToCart(id){
-    let selectedProduct = product.find(p => p.id === id);
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let existing = cart.find(item => item.id === id);
-
-    if(existing){
-        existing.quantity += 1;
-    } else {
-        cart.push({
-            id: selectedProduct.id,
-            name: selectedProduct.name,
-            discountedPrice: selectedProduct.discountedPrice,
-            imageUrl: selectedProduct.imageUrl,
-            quantity: 1
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./app.js"></script>
+    <script>
+        // Quick test to verify products are loading
+        console.log("Page loaded. Products available: ", typeof products !== 'undefined' ? products.length : 0);
+        window.addEventListener('load', () => {
+            const container = document.getElementById('product');
+            console.log("Product container:", container);
+            console.log("Container children:", container ? container.children.length : "not found");
         });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    navbarCartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-}
-
-document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("cart-hover")) {
-        let id = parseInt(e.target.dataset.id);
-        addToCart(id);
-    }
-
-    if (e.target.classList.contains("wishlist-icon")) {
-        let icon = e.target;
-        icon.classList.toggle("active");
-        if (icon.classList.contains("active")) {
-            wishlistCount++;
-            icon.classList.replace("fa-regular", "fa-solid");
-        } else {
-            wishlistCount--;
-            icon.classList.replace("fa-solid", "fa-regular");
-        }
-        navbarHeartCount.textContent = wishlistCount;
-    }
-});
-</script>
-
-
-    <script src="https://cdn.jsdzelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
+    </script>
 </body>
 </html>
