@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Login - Mikolo Tshirts</title>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
       <script src="https://kit.fontawesome.com/999358a4c6.js" crossorigin="anonymous"></script>
       <link rel="stylesheet" href="login.css">
@@ -74,12 +76,13 @@
     </div>
     <div class="login-box d-flex justify-content-center align-items-center flex-column mt-5">
         <h2 class="mb-4">Login to your account</h2>
-        <form action="">
+        <form id="loginForm">
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                <div id="emailW"></div>
             </div>
-            <label class="mb-2" for="password">password</label>
+            <label class="mb-2" for="password">Password</label>
                  <div class="input-group mb-3">
         <input type="password" class="form-control" id="password" placeholder="Enter your password">
         <span id="closed" class="input-group-text">
@@ -88,15 +91,23 @@
         <div class="passwordW"></div>
     </div>
             <div>
-                <input  type="checkbox" id="remember-me" >
+                <input type="checkbox" id="remember-me" >
                 <label for="remember-me"> Remember me</label>
             </div>
-            <button class="btn bb w-100 mt-1" id="login" type="submit" >Login</button>
+            <button class="btn bb w-100 mt-1" id="login" type="button">Login</button>
+            <div id="loginStatus" style="display:none;" class="mt-3 alert"></div>
         </form>
         <p class="mt-3">Don't have an account? <a href="signup.html">Sign up</a></p>
 
         <script type="module">
-           
+            // Mobile viewport fix for iOS Safari
+            const viewportHeight = () => {
+                const vh = window.innerHeight * 0.01;
+                document.documentElement.style.setProperty('--vh', vh + 'px');
+            };
+            viewportHeight();
+            window.addEventListener('resize', viewportHeight);
+
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
@@ -121,46 +132,96 @@
   const analytics = getAnalytics(app);
   const auth = getAuth();
 
+        document.getElementById("login").addEventListener("click", (e) => {
+            e.preventDefault();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value;
 
-
-        document.getElementById("login").addEventListener("click", () =>{
-             let email = document.getElementById("email").value;
-             let password = document.getElementById("password").value;
-
-              let emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
-           let passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{4,}$/
+            let emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
 
             let emailTest = emailRegex.test(email)
-            let passwordTest =  passwordRegex.test(password)
 
+            // Reset error states
+            document.getElementById("email").style.border = "";
+            document.getElementById("password").style.border = "";
+            document.getElementById("emailW").innerHTML = "";
+            document.getElementById("passwordW").innerHTML = "";
 
+            let isValid = true;
 
-            if(email == "" || password == ""){
-                   document.getElementById("email").style.border = "2px solid red !important";
-             document.getElementById("email").style.borderColor = "red";
-   
-            document.getElementById("password").style.border = "2px solid red !important";
-            document.getElementById("password").style.borderColor = "red";
+            if (!email) {
+                document.getElementById("email").style.border = "2px solid red";
+                document.getElementById("emailW").innerHTML = '<p class="text-danger">Email is required</p>';
+                isValid = false;
+            } else if (!emailTest) {
+                document.getElementById("email").style.border = "2px solid red";
+                document.getElementById("emailW").innerHTML = '<p class="text-danger">Email must be valid</p>';
+                isValid = false;
             }
-           
 
+            if (!password) {
+                document.getElementById("password").style.border = "2px solid red";
+                document.getElementById("passwordW").innerHTML = '<p class="text-danger">Password is required</p>';
+                isValid = false;
+            }
 
-         const auth = getAuth();
-         signInWithEmailAndPassword(auth, email, password)
-         .then((userCredential) => {
-          // Signed in 
-         const user = userCredential.user;
-           // ...
-          })
-       .catch((error) => {
-        const errorCode = error.code;
-       const errorMessage = error.message;
+            if (!isValid) return;
+
+            // Show loading state
+            let loginBtn = document.getElementById("login");
+            let originalText = loginBtn.innerHTML;
+            loginBtn.innerHTML = "Logging in...";
+            loginBtn.disabled = true;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in successfully
+                    const user = userCredential.user;
+                    
+                    // Success feedback
+                    let statusDiv = document.getElementById("loginStatus");
+                    statusDiv.className = "alert alert-success";
+                    statusDiv.innerHTML = "Login successful! Redirecting...";
+                    statusDiv.style.display = "block";
+
+                    // Store remember me preference
+                    if (document.getElementById("remember-me").checked) {
+                        localStorage.setItem("rememberMe", JSON.stringify({
+                            email: email,
+                            uid: user.uid
+                        }));
+                    }
+
+                    setTimeout(() => {
+                        window.location.href = "index.html";
+                    }, 1500);
+                })
+                .catch((error) => {
+                    let statusDiv = document.getElementById("loginStatus");
+                    statusDiv.className = "alert alert-danger";
+                    
+                    // User-friendly error messages
+                    let errorMsg = "An error occurred. Please try again.";
+                    if (error.code === "auth/user-not-found") {
+                        errorMsg = "No account found with this email.";
+                    } else if (error.code === "auth/wrong-password") {
+                        errorMsg = "Incorrect password.";
+                    } else if (error.code === "auth/invalid-email") {
+                        errorMsg = "Invalid email address.";
+                    } else if (error.code === "auth/user-disabled") {
+                        errorMsg = "This account has been disabled.";
+                    }
+                    
+                    statusDiv.innerHTML = `Error: ${errorMsg}`;
+                    statusDiv.style.display = "block";
+
+                    loginBtn.innerHTML = originalText;
+                    loginBtn.disabled = false;
+                });
         });
-        })
+        </script>
 
-
-
-
+        <script>
             const showPassword = () =>{
                 document.getElementById("closed").innerHTML = `<i class="bi bi-eye" id="togglePassword" style="cursor: pointer;" onclick="hidePassword()"></i>`;
                 document.getElementById("password").type = "text";
