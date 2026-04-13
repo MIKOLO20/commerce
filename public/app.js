@@ -20,7 +20,18 @@ let searchBtnMobile, queryInputMobile;
 // Wait for DOM
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM Content Loaded');
-    init();
+    
+    // Ensure Bootstrap is available on mobile
+    if (typeof bootstrap === 'undefined') {
+        console.warn('Bootstrap not loaded - waiting...');
+        setTimeout(init, 500);
+    } else {
+        init();
+    }
+});
+
+window.addEventListener('load', function() {
+    console.log('Page fully loaded');
 });
 
 function init() {
@@ -65,28 +76,22 @@ function setupModalCleanup() {
         myModal.addEventListener('hidden.bs.modal', function() {
             console.log('Modal hidden - cleaning up');
             
-            // Remove all modal-related classes from body
-            document.body.classList.remove('modal-open');
+            // Bootstrap handles modal-open class, just restore body styles
             document.body.style.overflow = '';
             document.body.style.paddingRight = '';
-            
-            // Remove any leftover backdrop
-            document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
-                backdrop.remove();
-            });
-            
-            // Re-enable page scrolling
-            document.documentElement.style.overflow = '';
-            
-            // Restore focus to page
-            document.body.focus();
             
             // Clear search inputs
             if (queryInput) queryInput.value = '';
             if (queryInputMobile) queryInputMobile.value = '';
             
-            // Force page to be interactive again
-            document.body.style.pointerEvents = '';
+            // Remove any leftover backdrop (with safety check)
+            setTimeout(() => {
+                document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+                    if (!document.body.classList.contains('modal-open')) {
+                        backdrop.remove();
+                    }
+                });
+            }, 300);
         });
         
         // Handle when modal is shown
@@ -148,7 +153,7 @@ function initializeCart() {
 }
 
 function setupEventListeners() {
-    // Cart hover click
+    // Cart hover click - supports both click and touch
     document.addEventListener('click', function(e) {
         if (e.target.classList.contains('cart-hover')) {
             addToCart(parseInt(e.target.dataset.id));
@@ -158,6 +163,19 @@ function setupEventListeners() {
             toggleWishlist(e.target);
         }
     });
+    
+    // Touch support for mobile
+    document.addEventListener('touchstart', function(e) {
+        if (e.target.classList.contains('cart-hover')) {
+            e.preventDefault();
+            addToCart(parseInt(e.target.dataset.id));
+        }
+        
+        if (e.target.classList.contains('wishlist-icon')) {
+            e.preventDefault();
+            toggleWishlist(e.target);
+        }
+    }, { passive: false });
     
     // Desktop Search
     if (searchBtn && queryInput) {

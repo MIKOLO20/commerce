@@ -805,7 +805,6 @@ a:focus {
 /* Ensure body can scroll after modal closes */
 body.modal-open {
     overflow: hidden;
-    padding-right: 0 !important;
 }
 
 /* Remove modal backdrop completely when modal is hidden */
@@ -816,4 +815,12 @@ body:not(.modal-open) .modal-backdrop {
 /* Ensure modal can be closed properly */
 .modal.hide {
     display: none;
+}
+
+/* Mobile viewport fix for iOS */
+@supports (padding: max(0px)) {
+    body {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+    }
 }
