@@ -242,14 +242,22 @@ document.getElementById("submit").addEventListener("click", (e) => {
                 createdAt: new Date().toISOString()
             });
 
+            // Store user session
+            localStorage.setItem("currentUser", JSON.stringify({
+                uid: userCredential.user.uid,
+                email: userCredential.user.email,
+                displayName: name,
+                isLoggedIn: true
+            }));
+
             // Success feedback
             let statusDiv = document.getElementById("signupStatus");
             statusDiv.className = "mt-3 alert alert-success";
-            statusDiv.innerHTML = "Account created successfully! Redirecting to login...";
+            statusDiv.innerHTML = "Account created successfully! Redirecting home...";
             statusDiv.style.display = "block";
 
             setTimeout(() => {
-                window.location.href = "login.html";
+                window.location.href = "index.html";
             }, 2000);
         })
         .catch((error) => {
@@ -275,6 +283,14 @@ document.getElementById("google").addEventListener("click", () =>{
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
+        
+        // Store user session
+        localStorage.setItem("currentUser", JSON.stringify({
+            uid: user.uid,
+            email: user.email,
+            displayName: user.displayName,
+            isLoggedIn: true
+        }));
         
         let statusDiv = document.getElementById("signupStatus");
         statusDiv.className = "mt-3 alert alert-success";

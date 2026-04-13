@@ -1,3 +1,18 @@
+// Check if user is logged in
+function isUserLoggedIn() {
+    const currentUser = localStorage.getItem("currentUser");
+    return currentUser ? JSON.parse(currentUser).isLoggedIn : false;
+}
+
+function requireLogin(action = "access this feature") {
+    if (!isUserLoggedIn()) {
+        alert(`Please login to ${action}`);
+        window.location.href = "login.html";
+        return false;
+    }
+    return true;
+}
+
 // Product Data
 const products = [
     { id: 1, name: "High-Grade Plain Soft 100% Cotton Dark grey Round Neck T-shirt", originalPrice: 39000, discountedPrice: 29970, sizes: ["M", "L", "XL"], imageUrl: "./clothes/1-46-630x630.jpg" },
@@ -210,6 +225,8 @@ function setupEventListeners() {
 }
 
 function addToCart(productId) {
+    if (!requireLogin("add items to cart")) return;
+    
     const product = products.find(p => p.id === productId);
     if (!product) return;
     
@@ -234,6 +251,11 @@ function addToCart(productId) {
 }
 
 function toggleWishlist(icon) {
+    if (!requireLogin("add items to wishlist")) {
+        icon.classList.remove('active');
+        return;
+    }
+    
     icon.classList.toggle('active');
     
     if (icon.classList.contains('active')) {

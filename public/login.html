@@ -178,6 +178,14 @@
                     // Signed in successfully
                     const user = userCredential.user;
                     
+                    // Store user session
+                    localStorage.setItem("currentUser", JSON.stringify({
+                        uid: user.uid,
+                        email: user.email,
+                        displayName: user.displayName || email,
+                        isLoggedIn: true
+                    }));
+                    
                     // Success feedback
                     let statusDiv = document.getElementById("loginStatus");
                     statusDiv.className = "alert alert-success";
