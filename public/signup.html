@@ -112,9 +112,7 @@
             <button type="button" id="submit" class="btn bb w-100">Sign Up</button>
             <div id="signupStatus" style="display:none;" class="mt-3 alert"></div>
             </div>
-            <div>
-                <button id="google" type="button" class="btn bb w-100 mt-2 fw-bolder"> <span class="text-primary">G</span><span class="text-danger">o</span><span class="text-warning">o</span><span class="text-primary">g</span><span class="text-secondary">l</span><span class="text-danger">e</span></button>
-            </div>
+            <!-- Google Sign-In disabled due to domain config - will enable later -->
         </form>
         <p class="mt-3">Already have an account? <a href="login.html">Login</a></p>
     </div>
@@ -233,41 +231,9 @@
             }
 
             function handleGoogleSignup() {
-                const provider = new firebase.auth.GoogleAuthProvider();
-                const btn = document.getElementById("google");
-                btn.innerHTML = "Signing in...";
-                btn.disabled = true;
-
-                auth.signInWithPopup(provider)
-                    .then((result) => {
-                        console.log("✓ Google signup success");
-
-                        localStorage.setItem("currentUser", JSON.stringify({
-                            uid: result.user.uid,
-                            email: result.user.email,
-                            displayName: result.user.displayName,
-                            isLoggedIn: true
-                        }));
-
-                        const statusDiv = document.getElementById("signupStatus");
-                        statusDiv.className = "mt-3 alert alert-success";
-                        statusDiv.textContent = "Signed up successfully! Redirecting...";
-                        statusDiv.style.display = "block";
-
-                        setTimeout(() => {
-                            window.location.href = "index.html";
-                        }, 1500);
-                    })
-                    .catch((error) => {
-                        console.error("❌ Google signup error:", error.code, error.message);
-                        const statusDiv = document.getElementById("signupStatus");
-                        statusDiv.className = "mt-3 alert alert-danger";
-                        statusDiv.textContent = "Error: " + error.message;
-                        statusDiv.style.display = "block";
-
-                        btn.innerHTML = '<span class="text-primary">G</span><span class="text-danger">o</span><span class="text-warning">o</span><span class="text-primary">g</span><span class="text-secondary">l</span><span class="text-danger">e</span>';
-                        btn.disabled = false;
-                    });
+                // Google Sign-In disabled due to domain not authorized in Firebase
+                // User needs to add domain to Firebase Console > Authors. domains
+                alert("Google Sign-In coming soon! Use email/password for now.");
             }
         }
 
