@@ -225,8 +225,6 @@ function setupEventListeners() {
 }
 
 function addToCart(productId) {
-    if (!requireLogin("add items to cart")) return;
-    
     const product = products.find(p => p.id === productId);
     if (!product) return;
     
@@ -251,11 +249,6 @@ function addToCart(productId) {
 }
 
 function toggleWishlist(icon) {
-    if (!requireLogin("add items to wishlist")) {
-        icon.classList.remove('active');
-        return;
-    }
-    
     icon.classList.toggle('active');
     
     if (icon.classList.contains('active')) {
