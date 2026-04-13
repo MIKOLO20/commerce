@@ -105,7 +105,7 @@
                 <input type="checkbox" id="terms">
                 <label for="terms"> I agree to the Terms and Conditions</label>
             </div>
-            <button type="button" id="submit" class="btn bb w-100" disabled>Sign Up</button>
+            <button type="button" id="submit" class="btn bb w-100">Sign Up</button>
             <div id="signupStatus" style="display:none;" class="mt-3 alert"></div>
             </div>
             <div>
@@ -116,37 +116,55 @@
     </div>
 
     <script type="module">
-        // Mobile viewport fix for iOS Safari
-        const viewportHeight = () => {
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', vh + 'px');
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDOP3Kss6Z0jHxzuHB7BM9jH_sR7JUhWrw",
+            authDomain: "my-first-e-commerce-1e208.firebaseapp.com",
+            projectId: "my-first-e-commerce-1e208",
+            storageBucket: "my-first-e-commerce-1e208.firebasestorage.app",
+            messagingSenderId: "237078006030",
+            appId: "1:237078006030:web:29da579748cf04c37c2f5f",
+            measurementId: "G-HXCLTNC0WQ"
         };
-        viewportHeight();
-        window.addEventListener('resize', viewportHeight);
-        
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-   import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyDOP3Kss6Z0jHxzuHB7BM9jH_sR7JUhWrw",
-    authDomain: "my-first-e-commerce-1e208.firebaseapp.com",
-    projectId: "my-first-e-commerce-1e208",
-    storageBucket: "my-first-e-commerce-1e208.firebasestorage.app",
-    messagingSenderId: "237078006030",
-    appId: "1:237078006030:web:29da579748cf04c37c2f5f",
-    measurementId: "G-HXCLTNC0WQ"
-  };
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth();
+        const provider = new GoogleAuthProvider();
+        const db = getDatabase();
+        console.log("Firebase initialized");
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-   const auth = getAuth();
-    const provider = new GoogleAuthProvider();
-    const db = getDatabase();
+        // Validate form in real-time
+        const validateForm = () => {
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const passwordConfirm = document.getElementById("passwordConfirm").value;
+            const terms = document.getElementById("terms").checked;
+
+            const nameRegex = /^[A-Za-z\s]{3,}$/;
+            const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{4,}$/;
+
+            const isValid = name && nameRegex.test(name) && 
+                           email && emailRegex.test(email) && 
+                           password && passwordRegex.test(password) && 
+                           passwordConfirm === password && 
+                           terms;
+            
+            document.getElementById("submit").disabled = !isValid;
+        };
+
+        // Add input listeners
+        document.getElementById("name").addEventListener("input", validateForm);
+        document.getElementById("email").addEventListener("input", validateForm);
+        document.getElementById("password").addEventListener("input", validateForm);
+        document.getElementById("passwordConfirm").addEventListener("input", validateForm);
+        document.getElementById("terms").addEventListener("change", validateForm);
 
 document.getElementById("submit").addEventListener("click", (e) => {
     e.preventDefault();

@@ -100,37 +100,24 @@
         <p class="mt-3">Don't have an account? <a href="signup.html">Sign up</a></p>
 
         <script type="module">
-            // Mobile viewport fix for iOS Safari
-            const viewportHeight = () => {
-                const vh = window.innerHeight * 0.01;
-                document.documentElement.style.setProperty('--vh', vh + 'px');
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
+            import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyDOP3Kss6Z0jHxzuHB7BM9jH_sR7JUhWrw",
+                authDomain: "my-first-e-commerce-1e208.firebaseapp.com",
+                projectId: "my-first-e-commerce-1e208",
+                storageBucket: "my-first-e-commerce-1e208.firebasestorage.app",
+                messagingSenderId: "237078006030",
+                appId: "1:237078006030:web:29da579748cf04c37c2f5f",
+                measurementId: "G-HXCLTNC0WQ"
             };
-            viewportHeight();
-            window.addEventListener('resize', viewportHeight);
 
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics.js";
-     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  const firebaseConfig = {
-    apiKey: "AIzaSyDOP3Kss6Z0jHxzuHB7BM9jH_sR7JUhWrw",
-    authDomain: "my-first-e-commerce-1e208.firebaseapp.com",
-    projectId: "my-first-e-commerce-1e208",
-    storageBucket: "my-first-e-commerce-1e208.firebasestorage.app",
-    messagingSenderId: "237078006030",
-    appId: "1:237078006030:web:29da579748cf04c37c2f5f",
-    measurementId: "G-HXCLTNC0WQ"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const auth = getAuth();
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            const auth = getAuth();
+            console.log("Firebase initialized");
 
         document.getElementById("login").addEventListener("click", (e) => {
             e.preventDefault();
