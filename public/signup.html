@@ -10,10 +10,10 @@
     <script src="https://kit.fontawesome.com/999358a4c6.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="login.css">
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js"></script>
+    <!-- Firebase Standalone (Global Scope) -->
+    <script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-database-compat.js"></script>
 </head>
 <style>
     .her{
@@ -120,26 +120,34 @@
     </div>
 
     <script>
-        // Firebase Configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDOP3Kss6Z0jHxzuHB7BM9jH_sR7JUhWrw",
-            authDomain: "my-first-e-commerce-1e208.firebaseapp.com",
-            projectId: "my-first-e-commerce-1e208",
-            storageBucket: "my-first-e-commerce-1e208.firebasestorage.app",
-            messagingSenderId: "237078006030",
-            appId: "1:237078006030:web:29da579748cf04c37c2f5f"
-        };
+        // Wait for Firebase to load
+        function initializeApp() {
+            if (typeof firebase === 'undefined') {
+                console.warn("Firebase not loaded yet, retrying...");
+                setTimeout(initializeApp, 500);
+                return;
+            }
 
-        // Initialize Firebase only once
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        
-        const auth = firebase.auth();
-        const db = firebase.database();
+            // Firebase Configuration
+            const firebaseConfig = {
+                apiKey: "AIzaSyDOP3Kss6Z0jHxzuHB7BM9jH_sR7JUhWrw",
+                authDomain: "my-first-e-commerce-1e208.firebaseapp.com",
+                projectId: "my-first-e-commerce-1e208",
+                storageBucket: "my-first-e-commerce-1e208.firebasestorage.app",
+                messagingSenderId: "237078006030",
+                appId: "1:237078006030:web:29da579748cf04c37c2f5f"
+            };
 
-        // Attach event listeners after DOM is ready
-        function init() {
+            // Initialize Firebase only once
+            if (!firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+            }
+            
+            const auth = firebase.auth();
+            const db = firebase.database();
+            console.log("✓ Firebase initialized successfully");
+
+            // Attach event listeners after Firebase is ready
             const submitBtn = document.getElementById("submit");
             const googleBtn = document.getElementById("google");
 
@@ -149,125 +157,125 @@
             if (googleBtn) {
                 googleBtn.addEventListener("click", handleGoogleSignup);
             }
+
+            function handleSignup() {
+                const name = document.getElementById("name").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const password = document.getElementById("password").value;
+                const passwordConfirm = document.getElementById("passwordConfirm").value;
+                const terms = document.getElementById("terms").checked;
+
+                // Simple validation
+                if (!name || name.length < 3) {
+                    document.getElementById("nameW").textContent = "Name must be at least 3 characters";
+                    return;
+                }
+                if (!email || !email.includes("@")) {
+                    document.getElementById("emailW").textContent = "Valid email required";
+                    return;
+                }
+                if (!password || password.length < 4) {
+                    document.getElementById("passwordW").textContent = "Password must be 4+ characters";
+                    return;
+                }
+                if (password !== passwordConfirm) {
+                    document.getElementById("passwordConfirmW").textContent = "Passwords don't match";
+                    return;
+                }
+                if (!terms) {
+                    alert("Please agree to Terms and Conditions");
+                    return;
+                }
+
+                // Clear previous errors
+                document.getElementById("nameW").textContent = "";
+                document.getElementById("emailW").textContent = "";
+                document.getElementById("passwordW").textContent = "";
+                document.getElementById("passwordConfirmW").textContent = "";
+
+                const submitBtn = document.getElementById("submit");
+                submitBtn.innerHTML = "Creating account...";
+                submitBtn.disabled = true;
+
+                // Create user
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then((userCredential) => {
+                        console.log("✓ User created:", userCredential.user.uid);
+
+                        // Store session
+                        localStorage.setItem("currentUser", JSON.stringify({
+                            uid: userCredential.user.uid,
+                            email: userCredential.user.email,
+                            displayName: name,
+                            isLoggedIn: true
+                        }));
+
+                        // Show success and redirect
+                        const statusDiv = document.getElementById("signupStatus");
+                        statusDiv.className = "mt-3 alert alert-success";
+                        statusDiv.textContent = "Account created! Redirecting...";
+                        statusDiv.style.display = "block";
+
+                        setTimeout(() => {
+                            window.location.href = "index.html";
+                        }, 1500);
+                    })
+                    .catch((error) => {
+                        console.error("❌ Signup error:", error.code, error.message);
+                        const statusDiv = document.getElementById("signupStatus");
+                        statusDiv.className = "mt-3 alert alert-danger";
+                        statusDiv.textContent = "Error: " + error.message;
+                        statusDiv.style.display = "block";
+
+                        submitBtn.innerHTML = "Sign Up";
+                        submitBtn.disabled = false;
+                    });
+            }
+
+            function handleGoogleSignup() {
+                const provider = new firebase.auth.GoogleAuthProvider();
+                const btn = document.getElementById("google");
+                btn.innerHTML = "Signing in...";
+                btn.disabled = true;
+
+                auth.signInWithPopup(provider)
+                    .then((result) => {
+                        console.log("✓ Google signup success");
+
+                        localStorage.setItem("currentUser", JSON.stringify({
+                            uid: result.user.uid,
+                            email: result.user.email,
+                            displayName: result.user.displayName,
+                            isLoggedIn: true
+                        }));
+
+                        const statusDiv = document.getElementById("signupStatus");
+                        statusDiv.className = "mt-3 alert alert-success";
+                        statusDiv.textContent = "Signed up successfully! Redirecting...";
+                        statusDiv.style.display = "block";
+
+                        setTimeout(() => {
+                            window.location.href = "index.html";
+                        }, 1500);
+                    })
+                    .catch((error) => {
+                        console.error("❌ Google signup error:", error.code, error.message);
+                        const statusDiv = document.getElementById("signupStatus");
+                        statusDiv.className = "mt-3 alert alert-danger";
+                        statusDiv.textContent = "Error: " + error.message;
+                        statusDiv.style.display = "block";
+
+                        btn.innerHTML = '<span class="text-primary">G</span><span class="text-danger">o</span><span class="text-warning">o</span><span class="text-primary">g</span><span class="text-secondary">l</span><span class="text-danger">e</span>';
+                        btn.disabled = false;
+                    });
+            }
         }
 
-        function handleSignup() {
-            const name = document.getElementById("name").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const password = document.getElementById("password").value;
-            const passwordConfirm = document.getElementById("passwordConfirm").value;
-            const terms = document.getElementById("terms").checked;
-
-            // Simple validation
-            if (!name || name.length < 3) {
-                document.getElementById("nameW").textContent = "Name must be at least 3 characters";
-                return;
-            }
-            if (!email || !email.includes("@")) {
-                document.getElementById("emailW").textContent = "Valid email required";
-                return;
-            }
-            if (!password || password.length < 4) {
-                document.getElementById("passwordW").textContent = "Password must be 4+ characters";
-                return;
-            }
-            if (password !== passwordConfirm) {
-                document.getElementById("passwordConfirmW").textContent = "Passwords don't match";
-                return;
-            }
-            if (!terms) {
-                alert("Please agree to Terms and Conditions");
-                return;
-            }
-
-            // Clear previous errors
-            document.getElementById("nameW").textContent = "";
-            document.getElementById("emailW").textContent = "";
-            document.getElementById("passwordW").textContent = "";
-            document.getElementById("passwordConfirmW").textContent = "";
-
-            const submitBtn = document.getElementById("submit");
-            submitBtn.innerHTML = "Creating account...";
-            submitBtn.disabled = true;
-
-            // Create user
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    console.log("User created:", userCredential.user.uid);
-
-                    // Store session
-                    localStorage.setItem("currentUser", JSON.stringify({
-                        uid: userCredential.user.uid,
-                        email: userCredential.user.email,
-                        displayName: name,
-                        isLoggedIn: true
-                    }));
-
-                    // Show success and redirect
-                    const statusDiv = document.getElementById("signupStatus");
-                    statusDiv.className = "mt-3 alert alert-success";
-                    statusDiv.textContent = "Account created! Redirecting...";
-                    statusDiv.style.display = "block";
-
-                    setTimeout(() => {
-                        window.location.href = "index.html";
-                    }, 1500);
-                })
-                .catch((error) => {
-                    console.error("Signup error:", error.code, error.message);
-                    const statusDiv = document.getElementById("signupStatus");
-                    statusDiv.className = "mt-3 alert alert-danger";
-                    statusDiv.textContent = "Error: " + error.message;
-                    statusDiv.style.display = "block";
-
-                    submitBtn.innerHTML = "Sign Up";
-                    submitBtn.disabled = false;
-                });
-        }
-
-        function handleGoogleSignup() {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            const btn = document.getElementById("google");
-            btn.innerHTML = "Signing in...";
-            btn.disabled = true;
-
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    console.log("Google signup success");
-
-                    localStorage.setItem("currentUser", JSON.stringify({
-                        uid: result.user.uid,
-                        email: result.user.email,
-                        displayName: result.user.displayName,
-                        isLoggedIn: true
-                    }));
-
-                    const statusDiv = document.getElementById("signupStatus");
-                    statusDiv.className = "mt-3 alert alert-success";
-                    statusDiv.textContent = "Signed up successfully! Redirecting...";
-                    statusDiv.style.display = "block";
-
-                    setTimeout(() => {
-                        window.location.href = "index.html";
-                    }, 1500);
-                })
-                .catch((error) => {
-                    console.error("Google signup error:", error.code, error.message);
-                    const statusDiv = document.getElementById("signupStatus");
-                    statusDiv.className = "mt-3 alert alert-danger";
-                    statusDiv.textContent = "Error: " + error.message;
-                    statusDiv.style.display = "block";
-
-                    btn.innerHTML = '<span class="text-primary">G</span><span class="text-danger">o</span><span class="text-warning">o</span><span class="text-primary">g</span><span class="text-secondary">l</span><span class="text-danger">e</span>';
-                    btn.disabled = false;
-                });
-        }
-
-        // Initialize when page loads
+        // Initialize when document loads
         if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", init);
+            document.addEventListener("DOMContentLoaded", initializeApp);
         } else {
-            init();
+            initializeApp();
         }
     </script>
 
