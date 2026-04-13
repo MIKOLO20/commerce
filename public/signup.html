@@ -94,7 +94,7 @@
         <span id="closed" class="input-group-text">
             <i class="bi bi-eye-slash" id="togglePassword" style="cursor: pointer;" onclick="showPassword()"></i>
         </span>
-        <div class="passwordW"></div>
+        <div id="passwordW"></div>
     </div>
     <label class="mb-2" for="passwordConfirm">Confirm Password</label>
                <div class="input-group mb-3">
@@ -102,7 +102,7 @@
         <span id="closed2" class="input-group-text">
             <i class="bi bi-eye-slash" id="togglePasswordConfirm" style="cursor: pointer;" onclick="showPasswordConfirm()"></i>
         </span>
-        <div class="passwordConfirmW"></div>
+        <div id="passwordConfirmW"></div>
     </div>
             <div>
                <div class="mb-3">
@@ -163,35 +163,46 @@
                 const passwordConfirm = document.getElementById("passwordConfirm").value;
                 const terms = document.getElementById("terms").checked;
 
-                // Simple validation
+                // Clear all previous errors first
+                const errorElements = ["nameW", "emailW", "passwordW", "passwordConfirmW"];
+                errorElements.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.textContent = "";
+                });
+
+                // Validation
+                let hasError = false;
+
                 if (!name || name.length < 3) {
-                    document.getElementById("nameW").textContent = "Name must be at least 3 characters";
-                    return;
+                    const el = document.getElementById("nameW");
+                    if (el) el.textContent = "Name must be at least 3 characters";
+                    hasError = true;
                 }
                 if (!email || !email.includes("@")) {
-                    document.getElementById("emailW").textContent = "Valid email required";
-                    return;
+                    const el = document.getElementById("emailW");
+                    if (el) el.textContent = "Valid email required";
+                    hasError = true;
                 }
                 if (!password || password.length < 4) {
-                    document.getElementById("passwordW").textContent = "Password must be 4+ characters";
-                    return;
+                    const el = document.getElementById("passwordW");
+                    if (el) el.textContent = "Password must be 4+ characters";
+                    hasError = true;
                 }
                 if (password !== passwordConfirm) {
-                    document.getElementById("passwordConfirmW").textContent = "Passwords don't match";
-                    return;
+                    const el = document.getElementById("passwordConfirmW");
+                    if (el) el.textContent = "Passwords don't match";
+                    hasError = true;
                 }
                 if (!terms) {
                     alert("Please agree to Terms and Conditions");
                     return;
                 }
 
-                // Clear previous errors
-                document.getElementById("nameW").textContent = "";
-                document.getElementById("emailW").textContent = "";
-                document.getElementById("passwordW").textContent = "";
-                document.getElementById("passwordConfirmW").textContent = "";
+                if (hasError) return;
 
                 const submitBtn = document.getElementById("submit");
+                if (!submitBtn) return;
+
                 submitBtn.innerHTML = "Creating account...";
                 submitBtn.disabled = true;
 
@@ -210,9 +221,11 @@
 
                         // Show success and redirect
                         const statusDiv = document.getElementById("signupStatus");
-                        statusDiv.className = "mt-3 alert alert-success";
-                        statusDiv.textContent = "Account created! Redirecting...";
-                        statusDiv.style.display = "block";
+                        if (statusDiv) {
+                            statusDiv.className = "mt-3 alert alert-success";
+                            statusDiv.textContent = "Account created! Redirecting...";
+                            statusDiv.style.display = "block";
+                        }
 
                         setTimeout(() => {
                             window.location.href = "index.html";
@@ -221,9 +234,11 @@
                     .catch((error) => {
                         console.error("❌ Signup error:", error.code, error.message);
                         const statusDiv = document.getElementById("signupStatus");
-                        statusDiv.className = "mt-3 alert alert-danger";
-                        statusDiv.textContent = "Error: " + error.message;
-                        statusDiv.style.display = "block";
+                        if (statusDiv) {
+                            statusDiv.className = "mt-3 alert alert-danger";
+                            statusDiv.textContent = "Error: " + error.message;
+                            statusDiv.style.display = "block";
+                        }
 
                         submitBtn.innerHTML = "Sign Up";
                         submitBtn.disabled = false;

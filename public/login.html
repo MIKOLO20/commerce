@@ -91,7 +91,7 @@
         <span id="closed" class="input-group-text">
             <i class="bi bi-eye-slash" id="togglePassword" style="cursor: pointer;" onclick="showPassword()"></i>
         </span>
-        <div class="passwordW"></div>
+        <div id="passwordW"></div>
     </div>
             <div>
                 <input type="checkbox" id="remember-me" >
@@ -143,17 +143,21 @@
 
                     // Simple validation
                     if (!email || !email.includes("@")) {
-                        document.getElementById("emailW").innerHTML = '<p class="text-danger">Valid email required</p>';
+                        const el = document.getElementById("emailW");
+                        if (el) el.innerHTML = '<p class="text-danger">Valid email required</p>';
                         return;
                     }
                     if (!password) {
-                        document.querySelector(".passwordW").innerHTML = '<p class="text-danger">Password is required</p>';
+                        const el = document.getElementById("passwordW");
+                        if (el) el.innerHTML = '<p class="text-danger">Password is required</p>';
                         return;
                     }
 
                     // Clear previous errors
-                    document.getElementById("emailW").innerHTML = "";
-                    document.querySelector(".passwordW").innerHTML = "";
+                    const emailWEl = document.getElementById("emailW");
+                    const passwordWEl = document.getElementById("passwordW");
+                    if (emailWEl) emailWEl.innerHTML = "";
+                    if (passwordWEl) passwordWEl.innerHTML = "";
 
                     const loginBtn = document.getElementById("login");
                     loginBtn.innerHTML = "Logging in...";
