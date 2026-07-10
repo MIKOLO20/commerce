@@ -34,8 +34,6 @@ let searchBtnMobile, queryInputMobile;
 
 // Wait for DOM
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM Content Loaded');
-    
     // Ensure Bootstrap is available on mobile
     if (typeof bootstrap === 'undefined') {
         console.warn('Bootstrap not loaded - waiting...');
@@ -43,10 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         init();
     }
-});
-
-window.addEventListener('load', function() {
-    console.log('Page fully loaded');
 });
 
 function init() {
@@ -61,11 +55,7 @@ function init() {
     queryInputMobile = document.getElementById("query-mobile");
     modalBody = document.getElementById("body");
     sortDropdown = document.querySelector(".sort-dropdown");
-    
-    console.log('Initializing - Product Container found:', !!productContainer);
-    console.log('Search button found:', !!searchBtn);
-    console.log('Query input found:', !!queryInput);
-    
+
     if (!productContainer) {
         console.error('ERROR: Product container not found!');
         return;
@@ -89,8 +79,6 @@ function setupModalCleanup() {
     if (myModal) {
         // Handle when modal is hidden
         myModal.addEventListener('hidden.bs.modal', function() {
-            console.log('Modal hidden - cleaning up');
-            
             // Bootstrap handles modal-open class, just restore body styles
             document.body.style.overflow = '';
             document.body.style.paddingRight = '';
@@ -107,11 +95,6 @@ function setupModalCleanup() {
                     }
                 });
             }, 300);
-        });
-        
-        // Handle when modal is shown
-        myModal.addEventListener('shown.bs.modal', function() {
-            console.log('Modal shown');
         });
         
         // Handle ESC key to properly close modal
@@ -157,7 +140,6 @@ function displayProducts(productsToDisplay) {
     });
     
     productContainer.innerHTML = html;
-    console.log('Displayed ' + productsToDisplay.length + ' products');
 }
 
 function initializeCart() {
@@ -358,8 +340,6 @@ function performSearch() {
 }
 
 function renderSearchResults(results, query) {
-    console.log('Searching for:', query, 'Found:', results.length);
-    
     if (!modalBody) {
         console.error('Modal body not found!');
         return;

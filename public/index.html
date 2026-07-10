@@ -265,14 +265,5 @@
     </script>
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script defer src="./app.js"></script>
-    <script>
-        // Quick test to verify products are loading
-        console.log("Page loaded. Products available: ", typeof products !== 'undefined' ? products.length : 0);
-        window.addEventListener('load', () => {
-            const container = document.getElementById('product');
-            console.log("Product container:", container);
-            console.log("Container children:", container ? container.children.length : "not found");
-        });
-    </script>
 </body>
 </html>

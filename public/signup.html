@@ -5,121 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Create your Mikolo Tshirts account">
     <title>Sign Up - Mikolo Tshirts</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <script src="https://kit.fontawesome.com/999358a4c6.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="./style.css">
     <!-- Firebase Standalone (Global Scope) -->
     <script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.6.0/firebase-database-compat.js"></script>
 </head>
-<style>
-    .her{
-    position: relative;
-}
-.her span{
-     position: absolute;
-        top: -4px;
-        right: -2px;
-        background-color:  #000035;
-        color: white;
-        border-radius: 50%;
-        padding: 3px 5px;
-        font-size: 6px;
-        font-weight: bold;
-}
-.box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    gap: 40px;
-    font-weight: bold;
-    width: 100%;
-    background-color: #000035;
-    height: 6vh;
-}
-.box p{
-    margin-top: auto;
-}
-.bb{
-    background-color: #000035;
-    color: white;
-}
-
-</style>
 <body>
-     <header class="bg-danger text-white text-center p-2 fw-bold">FREE SHIPPING ON ORDERS ABOVE 100K!</header>
-    <nav class="d-flex justify-content-center align-items-center p-3 border-bottom shadow-sm position-sticky top-0 bg-white gap-3">
-       <marquee behavior="scroll" direction="left"> <h2>MIKOLO.TSHIRTS.NG</h2></marquee>
-       
-     <div class="d-flex"> 
-        <input type="email" name="" id="" placeholder="Search for products, brands and more" class="form-control w-50">
-   <div class="but">
-      <button class="btn text-white" type="submit"><i class="fa-solid fa-arrow-right"></i></button>
-   </div>
-     </div>
-     <div class="d-flex fs-4 g-3 gap-4 ms-4">
-        <i class="fa-solid fa-user"></i>
-        <i class="fa-regular fa-heart her"><span>0</span></i>
-        <i class="fa-regular fa-message"></i>
-     </div>
+    <header class="bg-danger text-white text-center p-2 fw-bold">FREE SHIPPING ON ORDERS ABOVE 100K!</header>
+
+    <nav class="navbar auth-navbar navbar-light bg-white border-bottom shadow-sm">
+        <div class="container-fluid px-3">
+            <a class="navbar-brand fw-bold text-dark text-decoration-none" href="index.html">
+                <i class="fa-solid fa-arrow-left me-2"></i>MIKOLO.TSHIRTS.NG
+            </a>
+        </div>
     </nav>
-    <div class="box text-white">
-        <p>All Accessories</p>
-        <p>Round Neck</p>
-        <p>V-Neck</p>
-        <p>Specials Offers</p>
-        <p>Active wear</p>
-        <p>Graphic Tees comming soon!</p>
-    </div>
-    <div class="login-box d-flex justify-content-center align-items-center flex-column mt-5">
-        <h2 class="mb-4">Sign Up for an Account</h2>
-        <form id="signupForm">
-            <div class="mb-3">
-                <label for="name" class="form-label">Full Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Enter your full name">
-                <div id="nameW"></div>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter your email">
-                <div id="emailW"></div>
-            </div>
-            <label class="mb-2" for="password">Password</label>
-                 <div class="input-group mb-3">
-        <input type="password" class="form-control" id="password" placeholder="Enter your password">
-        <span id="closed" class="input-group-text">
-            <i class="bi bi-eye-slash" id="togglePassword" style="cursor: pointer;" onclick="showPassword()"></i>
-        </span>
-        <div id="passwordW"></div>
-    </div>
-    <label class="mb-2" for="passwordConfirm">Confirm Password</label>
-               <div class="input-group mb-3">
-        <input type="password" class="form-control" id="passwordConfirm" placeholder="Confirm your password">
-        <span id="closed2" class="input-group-text">
-            <i class="bi bi-eye-slash" id="togglePasswordConfirm" style="cursor: pointer;" onclick="showPasswordConfirm()"></i>
-        </span>
-        <div id="passwordConfirmW"></div>
-    </div>
-            <div>
-               <div class="mb-3">
-                <input type="checkbox" id="terms">
-                <label for="terms"> I agree to the Terms and Conditions</label>
-            </div>
-            <button type="button" id="submit" class="btn bb w-100">Sign Up</button>
-            <div id="signupStatus" style="display:none;" class="mt-3 alert"></div>
-            </div>
-            <div>
-                <button id="google" type="button" class="btn bb w-100 mt-2 fw-bolder"> <span class="text-primary">G</span><span class="text-danger">o</span><span class="text-warning">o</span><span class="text-primary">g</span><span class="text-secondary">l</span><span class="text-danger">e</span></button>
-            </div>
-        </form>
-        <p class="mt-3">Already have an account? <a href="login.html">Login</a></p>
+
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <h2 class="auth-title">Create your account</h2>
+            <p class="auth-subtitle">Sign up to start shopping with Mikolo Tshirts</p>
+
+            <form id="signupForm" novalidate>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your full name">
+                    <div id="nameW" class="field-error"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                    <div id="emailW" class="field-error"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="password" placeholder="Enter your password">
+                        <span class="input-group-text password-toggle" id="closed" onclick="showPassword()">
+                            <i class="bi bi-eye-slash"></i>
+                        </span>
+                    </div>
+                    <div id="passwordW" class="field-error"></div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="passwordConfirm" class="form-label">Confirm Password</label>
+                    <div class="input-group">
+                        <input type="password" class="form-control" id="passwordConfirm" placeholder="Confirm your password">
+                        <span class="input-group-text password-toggle" id="closed2" onclick="showPasswordConfirm()">
+                            <i class="bi bi-eye-slash"></i>
+                        </span>
+                    </div>
+                    <div id="passwordConfirmW" class="field-error"></div>
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="terms">
+                    <label class="form-check-label" for="terms">I agree to the Terms and Conditions</label>
+                </div>
+
+                <button type="button" id="submit" class="btn btn-brand w-100">Sign Up</button>
+                <div id="signupStatus" style="display:none;" class="mt-3 alert"></div>
+
+                <div class="auth-divider">or</div>
+
+                <button id="google" type="button" class="btn btn-google w-100">
+                    <i class="fa-brands fa-google me-2"></i>Continue with Google
+                </button>
+            </form>
+
+            <p class="auth-footer-link">Already have an account? <a href="login.html">Login</a></p>
+        </div>
     </div>
 
     <script>
+        // If already logged in, skip straight to the shop
+        (function redirectIfLoggedIn() {
+            const currentUser = localStorage.getItem("currentUser");
+            if (currentUser) {
+                try {
+                    if (JSON.parse(currentUser).isLoggedIn) {
+                        window.location.href = "index.html";
+                    }
+                } catch (e) {
+                    localStorage.removeItem("currentUser");
+                }
+            }
+        })();
+
         // Wait for Firebase to load
         function initializeApp() {
             if (typeof firebase === 'undefined') {
@@ -142,10 +123,9 @@
             if (!firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
             }
-            
+
             const auth = firebase.auth();
             const db = firebase.database();
-            console.log("✓ Firebase initialized successfully");
 
             // Attach event listeners after Firebase is ready
             const submitBtn = document.getElementById("submit");
@@ -211,8 +191,6 @@
                 // Create user
                 auth.createUserWithEmailAndPassword(email, password)
                     .then((userCredential) => {
-                        console.log("✓ User created:", userCredential.user.uid);
-
                         // Store session
                         localStorage.setItem("currentUser", JSON.stringify({
                             uid: userCredential.user.uid,
@@ -234,11 +212,21 @@
                         }, 1500);
                     })
                     .catch((error) => {
-                        console.error("❌ Signup error:", error.code, error.message);
+                        console.error("Signup error:", error.code, error.message);
                         const statusDiv = document.getElementById("signupStatus");
+
+                        let errorMsg = error.message;
+                        if (error.code === "auth/email-already-in-use") {
+                            errorMsg = "An account with this email already exists.";
+                        } else if (error.code === "auth/weak-password") {
+                            errorMsg = "Password is too weak.";
+                        } else if (error.code === "auth/invalid-email") {
+                            errorMsg = "Invalid email address.";
+                        }
+
                         if (statusDiv) {
                             statusDiv.className = "mt-3 alert alert-danger";
-                            statusDiv.textContent = "Error: " + error.message;
+                            statusDiv.textContent = "Error: " + errorMsg;
                             statusDiv.style.display = "block";
                         }
 
@@ -250,13 +238,12 @@
             function handleGoogleSignup() {
                 const provider = new firebase.auth.GoogleAuthProvider();
                 const btn = document.getElementById("google");
+                const originalHtml = btn.innerHTML;
                 btn.innerHTML = "Signing in...";
                 btn.disabled = true;
 
                 auth.signInWithPopup(provider)
                     .then((result) => {
-                        console.log("✓ Google signup success");
-
                         localStorage.setItem("currentUser", JSON.stringify({
                             uid: result.user.uid,
                             email: result.user.email,
@@ -276,15 +263,23 @@
                         }, 1500);
                     })
                     .catch((error) => {
-                        console.error("❌ Google signup error:", error.code, error.message);
+                        console.error("Google signup error:", error.code, error.message);
                         const statusDiv = document.getElementById("signupStatus");
+
+                        let errorMsg = error.message;
+                        if (error.code === "auth/unauthorized-domain") {
+                            errorMsg = "This domain isn't authorized for Google Sign-In yet.";
+                        } else if (error.code === "auth/popup-closed-by-user") {
+                            errorMsg = "Sign-in was cancelled.";
+                        }
+
                         if (statusDiv) {
                             statusDiv.className = "mt-3 alert alert-danger";
-                            statusDiv.textContent = "Error: " + error.message;
+                            statusDiv.textContent = "Error: " + errorMsg;
                             statusDiv.style.display = "block";
                         }
 
-                        btn.innerHTML = '<span class="text-primary">G</span><span class="text-danger">o</span><span class="text-warning">o</span><span class="text-primary">g</span><span class="text-secondary">l</span><span class="text-danger">e</span>';
+                        btn.innerHTML = originalHtml;
                         btn.disabled = false;
                     });
             }
@@ -299,21 +294,26 @@
     </script>
 
     <script>
-        const showPassword = () =>{
-            document.getElementById("closed").innerHTML = `<i class="bi bi-eye" id="open" style="cursor: pointer;" onclick="hidePassword()"></i>`;
+        const showPassword = () => {
+            document.getElementById("closed").innerHTML = `<i class="bi bi-eye"></i>`;
+            document.getElementById("closed").setAttribute("onclick", "hidePassword()");
             document.getElementById("password").type = "text";
         }
-        const hidePassword = () =>{
-            document.getElementById("closed").innerHTML = `<i class="bi bi-eye-slash" id="closed" style="cursor: pointer;" onclick="showPassword()"></i>`;
+        const hidePassword = () => {
+            document.getElementById("closed").innerHTML = `<i class="bi bi-eye-slash"></i>`;
+            document.getElementById("closed").setAttribute("onclick", "showPassword()");
             document.getElementById("password").type = "password";
         }
-        const showPasswordConfirm = () =>{
-             document.getElementById("closed2").innerHTML = `<i class="bi bi-eye" id="open" style="cursor: pointer;" onclick="hidePasswordConfirm()"></i>`;
+        const showPasswordConfirm = () => {
+            document.getElementById("closed2").innerHTML = `<i class="bi bi-eye"></i>`;
+            document.getElementById("closed2").setAttribute("onclick", "hidePasswordConfirm()");
             document.getElementById("passwordConfirm").type = "text";
         }
-        const hidePasswordConfirm = () =>{
-            document.getElementById("closed2").innerHTML = `<i class="bi bi-eye-slash" id="closed" style="cursor: pointer;" onclick="showPasswordConfirm()"></i>`;
+        const hidePasswordConfirm = () => {
+            document.getElementById("closed2").innerHTML = `<i class="bi bi-eye-slash"></i>`;
+            document.getElementById("closed2").setAttribute("onclick", "showPasswordConfirm()");
             document.getElementById("passwordConfirm").type = "password";
         }
-    </script></body>
+    </script>
+</body>
 </html>

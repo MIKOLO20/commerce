@@ -784,7 +784,142 @@ a:focus {
     outline-offset: 2px;
 }
 
-/* ============================================ 
+/* ============================================
+   AUTH PAGES (LOGIN / SIGNUP)
+   ============================================ */
+.auth-navbar {
+    padding: 0.85rem 0;
+}
+
+.auth-navbar .navbar-brand {
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+}
+
+.auth-wrapper {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1rem;
+}
+
+.auth-card {
+    background: white;
+    width: 100%;
+    max-width: 420px;
+    padding: 2.5rem 2rem;
+    border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.auth-title {
+    color: #000035;
+    font-weight: bold;
+    margin-bottom: 0.35rem;
+}
+
+.auth-subtitle {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 1.75rem;
+}
+
+.auth-card label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.auth-card .form-control {
+    border-radius: 6px;
+}
+
+.auth-card .form-control:focus {
+    border-color: #000035;
+    box-shadow: 0 0 0 0.2rem rgba(0, 0, 53, 0.15);
+}
+
+.btn-brand {
+    background-color: #000035;
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-brand:hover {
+    background-color: #0a0040;
+    color: white;
+    transform: scale(1.01);
+}
+
+.btn-brand:disabled {
+    opacity: 0.7;
+    transform: none;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #999;
+    font-size: 0.8rem;
+    margin: 1.25rem 0;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+}
+
+.auth-divider:not(:empty)::before {
+    margin-right: 0.75rem;
+}
+
+.auth-divider:not(:empty)::after {
+    margin-left: 0.75rem;
+}
+
+.btn-google {
+    background: white;
+    border: 1px solid #ddd;
+    color: #333;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-google:hover {
+    background: #f8f9fa;
+    border-color: #ccc;
+}
+
+.auth-footer-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.auth-footer-link a {
+    color: #000035;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.password-toggle {
+    cursor: pointer;
+    background: white;
+}
+
+.field-error {
+    color: #dc3545;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+}
+
+/* ============================================
    MODAL FIXES
    ============================================ */
 /* Ensure modal doesn't break page responsiveness */
