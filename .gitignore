@@ -64,6 +64,15 @@ node_modules/
 
 # dotenv environment variables file
 .env
+.env.local
+.env.*.local
 
 # dataconnect generated files
 .dataconnect
+
+# Next.js build output
+apps/web/.next/
+apps/web/out/
+
+# mongodb-memory-server cached binaries
+.cache/
