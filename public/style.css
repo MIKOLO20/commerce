@@ -437,6 +437,7 @@ select {
     flex: 1;
     min-width: 0;
     text-align: center;
+    position: relative;
 }
 
 .complete-look-item img {
@@ -445,6 +446,12 @@ select {
     object-fit: cover;
     border-radius: 6px;
     border: 1px solid #eee;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.complete-look-item img:hover {
+    transform: scale(1.05);
 }
 
 .complete-look-item span {
@@ -452,6 +459,38 @@ select {
     font-size: 0.75rem;
     color: #000035;
     margin-top: 0.25rem;
+}
+
+.complete-look-cart {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: #000035;
+    color: white;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.complete-look-cart:hover {
+    background: #0a0040;
+    transform: scale(1.15);
+}
+
+.cloth.highlight {
+    animation: cloth-highlight 1.5s ease;
+}
+
+@keyframes cloth-highlight {
+    0% { box-shadow: 0 0 0 3px #000035; }
+    100% { box-shadow: none; }
 }
 /* ============================================ 
    FILTER & SORT SECTION

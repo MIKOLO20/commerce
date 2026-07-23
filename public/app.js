@@ -118,7 +118,7 @@ function displayProducts(productsToDisplay) {
     productsToDisplay.forEach(product => {
         const activeSize = selectedSizes[product.id];
         html += `
-        <div class="cloth">
+        <div class="cloth" id="cloth-${product.id}">
             <div class="img-box">
                 <img src="${product.imageUrl}" alt="${product.name}" loading="lazy" />
                 <div class="cart-hover" data-id="${product.id}" title="Add to cart">🛒</div>
@@ -157,12 +157,28 @@ function renderCompleteLook(productId) {
         <div class="d-flex gap-2">
             ${others.map(p => `
                 <div class="complete-look-item">
-                    <img src="${p.imageUrl}" alt="${p.name}" loading="lazy" />
+                    <img src="${p.imageUrl}" alt="${p.name}" loading="lazy" class="complete-look-view" data-id="${p.id}" title="View ${p.name}" />
+                    <div class="complete-look-cart" data-id="${p.id}" title="Add to cart">🛒</div>
                     <span>₦${p.discountedPrice.toLocaleString()}</span>
                 </div>
             `).join('')}
         </div>
     `;
+}
+
+function quickAddToCart(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+    if (!selectedSizes[productId]) selectedSizes[productId] = product.sizes[0];
+    addToCart(productId);
+}
+
+function scrollToProduct(productId) {
+    const card = document.getElementById(`cloth-${productId}`);
+    if (!card) return;
+    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    card.classList.add('highlight');
+    setTimeout(() => card.classList.remove('highlight'), 1500);
 }
 
 function initializeCart() {
@@ -185,6 +201,14 @@ function setupEventListeners() {
 
         if (e.target.classList.contains('size-btn')) {
             selectSize(e.target);
+        }
+
+        if (e.target.classList.contains('complete-look-view')) {
+            scrollToProduct(parseInt(e.target.dataset.id));
+        }
+
+        if (e.target.classList.contains('complete-look-cart')) {
+            quickAddToCart(parseInt(e.target.dataset.id));
         }
     });
 
