@@ -138,11 +138,31 @@ function displayProducts(productsToDisplay) {
             <div class="d-flex gap-2">
                 ${product.sizes.map(size => `<button class="btn btn-outline-light size-btn${size === activeSize ? ' active' : ''}" type="button" data-id="${product.id}" data-size="${size}">${size}</button>`).join('')}
             </div>
+            <div class="complete-look" id="complete-look-${product.id}">
+                ${activeSize ? renderCompleteLook(product.id) : ''}
+            </div>
         </div>
         `;
     });
 
     productContainer.innerHTML = html;
+}
+
+function renderCompleteLook(productId) {
+    const others = products.filter(p => p.id !== productId).slice(0, 3);
+    if (others.length === 0) return '';
+
+    return `
+        <p class="complete-look-label">Goes well with this</p>
+        <div class="d-flex gap-2">
+            ${others.map(p => `
+                <div class="complete-look-item">
+                    <img src="${p.imageUrl}" alt="${p.name}" loading="lazy" />
+                    <span>₦${p.discountedPrice.toLocaleString()}</span>
+                </div>
+            `).join('')}
+        </div>
+    `;
 }
 
 function initializeCart() {
@@ -221,6 +241,9 @@ function selectSize(button) {
     button.parentElement.querySelectorAll('.size-btn').forEach(btn => {
         btn.classList.toggle('active', btn === button);
     });
+
+    const lookContainer = document.getElementById(`complete-look-${productId}`);
+    if (lookContainer) lookContainer.innerHTML = renderCompleteLook(productId);
 
     showNotification(`Size ${size} selected`);
 }

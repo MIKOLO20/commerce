@@ -417,6 +417,42 @@ select {
     color: white;
     border-color: #000035;
 }
+
+/* ============================================
+   COMPLETE THE LOOK
+   ============================================ */
+.complete-look {
+    padding: 0 1rem 1rem;
+}
+
+.complete-look-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: #666;
+    margin: 0.5rem 0 0.5rem;
+}
+
+.complete-look-item {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+}
+
+.complete-look-item img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid #eee;
+}
+
+.complete-look-item span {
+    display: block;
+    font-size: 0.75rem;
+    color: #000035;
+    margin-top: 0.25rem;
+}
 /* ============================================ 
    FILTER & SORT SECTION
    ============================================ */
