@@ -116,7 +116,7 @@ function displayProducts(productsToDisplay) {
 
     let html = '';
     productsToDisplay.forEach(product => {
-        const activeSize = selectedSizes[product.id] || product.sizes[0];
+        const activeSize = selectedSizes[product.id];
         html += `
         <div class="cloth">
             <div class="img-box">
@@ -226,10 +226,17 @@ function selectSize(button) {
 }
 
 function addToCart(productId) {
+    if (!requireLogin("add items to your cart")) return;
+
     const product = products.find(p => p.id === productId);
     if (!product) return;
 
-    const size = selectedSizes[productId] || product.sizes[0];
+    const size = selectedSizes[productId];
+    if (!size) {
+        showNotification('Please select a size first', 'error');
+        return;
+    }
+
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const existingItem = cart.find(item => item.id === productId && item.size === size);
 
@@ -252,6 +259,8 @@ function addToCart(productId) {
 }
 
 function toggleWishlist(icon) {
+    if (!requireLogin("use the wishlist")) return;
+
     icon.classList.toggle('active');
     
     if (icon.classList.contains('active')) {
@@ -425,14 +434,14 @@ function performSearchMobile() {
     performSearch();
 }
 
-function showNotification(message) {
+function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
     notification.textContent = message;
     notification.style.cssText = `
         position: fixed;
         bottom: 20px;
         right: 20px;
-        background-color: #28a745;
+        background-color: ${type === 'error' ? '#dc3545' : '#28a745'};
         color: white;
         padding: 12px 20px;
         border-radius: 8px;

@@ -76,3 +76,6 @@ apps/web/out/
 
 # mongodb-memory-server cached binaries
 .cache/
+
+.vercel
+.env*
