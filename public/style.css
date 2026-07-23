@@ -289,6 +289,15 @@ select {
     transform: scale(1.1);
 }
 
+/* Touch devices have no :hover, so the floating cart button
+   must be shown by default or it's never discoverable */
+@media (hover: none) {
+    .cart-hover {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Badge Section */
 .est {
     position: absolute;
@@ -720,11 +729,7 @@ select {
     }
 
     .navbar-brand {
-        font-size: 0.95rem;
-    }
-
-    .navbar-brand span {
-        display: none;
+        font-size: 0.8rem;
     }
 
     .nav-heart,
@@ -793,6 +798,26 @@ select {
         font-size: 0.75rem;
         padding: 0.4rem;
         min-width: 35px;
+    }
+
+    /* Complete the Look: 3-across is too tight in a narrow card,
+       wrap to 2-per-row instead */
+    .complete-look .d-flex {
+        flex-wrap: wrap;
+    }
+
+    .complete-look-item {
+        flex: 0 0 calc(50% - 0.25rem);
+    }
+
+    .complete-look-item span {
+        font-size: 0.7rem;
+    }
+
+    .complete-look-cart {
+        width: 18px;
+        height: 18px;
+        font-size: 0.65rem;
     }
 
     /* Filter */
