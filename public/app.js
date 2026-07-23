@@ -109,11 +109,14 @@ function setupModalCleanup() {
     }
 }
 
+const selectedSizes = {};
+
 function displayProducts(productsToDisplay) {
     if (!productContainer) return;
-    
+
     let html = '';
     productsToDisplay.forEach(product => {
+        const activeSize = selectedSizes[product.id] || product.sizes[0];
         html += `
         <div class="cloth">
             <div class="img-box">
@@ -133,12 +136,12 @@ function displayProducts(productsToDisplay) {
             </p>
             <h3 class="text-start">SIZE</h3>
             <div class="d-flex gap-2">
-                ${product.sizes.map(size => `<button class="btn btn-outline-light" type="button">${size}</button>`).join('')}
+                ${product.sizes.map(size => `<button class="btn btn-outline-light size-btn${size === activeSize ? ' active' : ''}" type="button" data-id="${product.id}" data-size="${size}">${size}</button>`).join('')}
             </div>
         </div>
         `;
     });
-    
+
     productContainer.innerHTML = html;
 }
 
@@ -159,8 +162,12 @@ function setupEventListeners() {
         if (e.target.classList.contains('wishlist-icon')) {
             toggleWishlist(e.target);
         }
+
+        if (e.target.classList.contains('size-btn')) {
+            selectSize(e.target);
+        }
     });
-    
+
     // Touch support for mobile
     document.addEventListener('touchstart', function(e) {
         if (e.target.classList.contains('cart-hover')) {
@@ -206,13 +213,26 @@ function setupEventListeners() {
     }
 }
 
+function selectSize(button) {
+    const productId = parseInt(button.dataset.id);
+    const size = button.dataset.size;
+    selectedSizes[productId] = size;
+
+    button.parentElement.querySelectorAll('.size-btn').forEach(btn => {
+        btn.classList.toggle('active', btn === button);
+    });
+
+    showNotification(`Size ${size} selected`);
+}
+
 function addToCart(productId) {
     const product = products.find(p => p.id === productId);
     if (!product) return;
-    
+
+    const size = selectedSizes[productId] || product.sizes[0];
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    const existingItem = cart.find(item => item.id === productId);
-    
+    const existingItem = cart.find(item => item.id === productId && item.size === size);
+
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
@@ -221,13 +241,14 @@ function addToCart(productId) {
             name: product.name,
             discountedPrice: product.discountedPrice,
             imageUrl: product.imageUrl,
+            size: size,
             quantity: 1
         });
     }
-    
+
     localStorage.setItem("cart", JSON.stringify(cart));
     navbarCartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-    showNotification('Added to cart!');
+    showNotification(`Added to cart! (Size ${size})`);
 }
 
 function toggleWishlist(icon) {

@@ -411,6 +411,12 @@ select {
     color: white;
     transform: scale(1.05);
 }
+
+.cloth .btn-outline-light.active {
+    background-color: #000035;
+    color: white;
+    border-color: #000035;
+}
 /* ============================================ 
    FILTER & SORT SECTION
    ============================================ */

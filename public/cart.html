@@ -408,6 +408,7 @@
                     <div class="item-details">
                         <div>
                             <h4>${item.name}</h4>
+                            ${item.size ? `<p class="size">Size: ${item.size}</p>` : ''}
                             <p class="price">₦${item.discountedPrice.toLocaleString()}</p>
                         </div>
                         <div class="qty-box">
